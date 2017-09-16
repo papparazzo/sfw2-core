@@ -1,0 +1,47 @@
+<?php
+
+/**
+ *  SFW2 - SimpleFrameWork
+ *
+ *  Copyright (C) 2017  Stefan Paproth
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as
+ *  published by the Free Software Foundation, either version 3 of the
+ *  License, or (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ *  GNU Affero General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.
+ *
+ */
+
+namespace SFW2;
+
+use Exception;
+
+class SFW2Exception extends Exception {
+    const UNKNOWN = 0;
+
+    protected $timeStamp = '';
+    protected $identifier = '';
+
+    public function __construct($msg, $code = self::UNKNOWN, $prev = null) {
+        $this->timeStamp = date('d.m.Y H:i:s');
+        $this->identifier = md5(microtime() . mt_rand());
+        $msg = PHP_EOL . wordwrap($msg, 150) . PHP_EOL;
+        parent::__construct($msg, $code, $prev);
+    }
+
+    public function getTimeStamp() {
+        return $this->timeStamp;
+    }
+
+    public function getIdentifier() {
+        return $this->identifier;
+    }
+}
