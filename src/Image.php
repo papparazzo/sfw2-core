@@ -22,7 +22,7 @@
 
 namespace SFW2;
 
-use SFW2\Image\Exception;
+use SFW2\Image\ImageException;
 
 class Image {
 
@@ -65,28 +65,27 @@ class Image {
                 break;
 
             default:
-                throw new Exception(
+                throw new ImageException(
                     'type "' . $chunk[0] . '" is not a valid image',
-                    Exception::INVALID_IMAGE_TYPE
+                    ImageException::INVALID_IMAGE_TYPE
                 );
         }
 
         $cnt = count(glob($this->path . self::DIR_ORIGINAL_RES . '*'));
         if($cnt >= self::MAX_IMAGE_COUNT) {
-            throw new SFW_Exception(
-                'more then <' . self::MAX_IMAGE_COUNT . '> images are not allowed'
+            throw new ImageException(
+                'more then <' . self::MAX_IMAGE_COUNT . '> images are not allowed',
+                ImageException::MAX_IMAGE_COUNT_REACHED
             );
         }
 
         $filename = str_repeat('0', mb_strlen('' . self::MAX_IMAGE_COUNT) - mb_strlen('' . $cnt)) . ++$cnt . '.' . $type;
 
-        if(!file_put_contents(
-                $this->path . self::DIR_ORIGINAL_RES . $filename, base64_decode($data[1]))
-        ) {
-            throw new Exception(
+        if(!file_put_contents($this->path . self::DIR_ORIGINAL_RES . $filename, base64_decode($data[1]))) {
+            throw new ImageException(
                 'could not store file "' . $filename . '" in path "' .
                 $this->path . self::DIR_ORIGINAL_RES . '"',
-                Exception::COULD_NOT_STORE_IMAGE
+                ImageException::COULD_NOT_STORE_IMAGE
             );
         }
 
@@ -112,9 +111,9 @@ class Image {
             !mkdir($this->path . self::DIR_ORIGINAL_RES) &&
             !mkdir($this->path . self::DIR_REGULAR_RES)
         ) {
-            throw new Exception(
+            throw new ImageException(
                 'could not create path "' . $this->path . '"',
-                Exception::COULD_NOT_CREATE_PATH
+                ImageException::COULD_NOT_CREATE_PATH
             );
         }
     }

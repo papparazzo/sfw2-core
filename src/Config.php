@@ -22,7 +22,7 @@
 
 namespace SFW2;
 
-use SFW2\Config\Exception;
+use SFW2\Config\ConfigException;
 
 class Config {
 
@@ -41,9 +41,9 @@ class Config {
 
     protected function checkConfigFile($configFile) {
         if(!is_readable($configFile)) {
-            throw new Exception(
+            throw new ConfigException(
                 'config-file <' . $configFile . '> is not readable',
-                Exception::FILE_NOT_FOUND
+                ConfigException::FILE_NOT_FOUND
             );
         }
     }

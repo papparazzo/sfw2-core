@@ -22,7 +22,7 @@
 
 namespace SFW2;
 
-use SFW2\Database\Exception;
+use SFW2\Database\DatabaseException;
 
 class Database {
 
@@ -31,9 +31,9 @@ class Database {
     public function __construct($host, $usr, $pwd, $db) {
         $this->db = new \mysqli($host, $usr, $pwd, $db);
         if(mysqli_connect_error()) {
-            throw new Exception(
+            throw new DatabaseException(
                 "Could not connect to database",
-                Exception::CON_FAILED
+                DatabaseException::CON_FAILED
             );
         }
         $this->query("set names 'utf8';");
@@ -197,9 +197,9 @@ class Database {
     private function query($stmt) {
         $res = $this->db->query($stmt);
         if($res === false) {
-            throw new Database\Exception(
+            throw new DatabaseException(
                 "query <" . $stmt . "> failed! \n\n" . $this->db->error,
-                Database\Exception::QUERY_FAILED
+                DatabaseException::QUERY_FAILED
             );
         }
         return $res;

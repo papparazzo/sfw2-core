@@ -20,13 +20,11 @@
  *
  */
 
-namespace SFW2\Database;
+namespace SFW2\Config;
 
 use SFW2\SFW2Exception;
 
-class Exception extends SFW2Exception {
-    const CON_FAILED             = 1;
-    const NO_ROW_FETCHED_SEL_ROW = 2;
-    const NO_ROW_FETCHED_SEL_SNG = 3;
-    const QUERY_FAILED           = 4;
+class ConfigException extends SFW2Exception {
+    const FILE_NOT_FOUND = 1;
+    const OBJECT_NOT_FOUND = 2;
 }
