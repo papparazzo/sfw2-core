@@ -23,13 +23,14 @@
 namespace SFW2;
 
 use SFW2\Database\DatabaseException;
+use mysqli;
 
 class Database {
 
     protected $db = null;
 
     public function __construct($host, $usr, $pwd, $db) {
-        $this->db = new \mysqli($host, $usr, $pwd, $db);
+        $this->db = new mysqli($host, $usr, $pwd, $db);
         if(mysqli_connect_error()) {
             throw new DatabaseException(
                 "Could not connect to database",
