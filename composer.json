@@ -1,7 +1,10 @@
 {
     "name": "sfw2/core",
     "type": "library",
+    "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3",
+
     "require": {
         "php": "^7.0"
     }
 }
+
