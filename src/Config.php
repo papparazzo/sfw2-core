@@ -20,9 +20,9 @@
  *
  */
 
-namespace SFW2;
+namespace SFW2\Core;
 
-use SFW2\Config\ConfigException;
+use SFW2\Core\Config\ConfigException;
 
 class Config {
 

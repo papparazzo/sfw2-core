@@ -20,9 +20,9 @@
  *
  */
 
-namespace SFW2\Image;
+namespace SFW2\Core\Image;
 
-use SFW2\SFW2Exception;
+use SFW2\Core\SFW2Exception;
 
 class ImageException extends SFW2Exception {
     const INVALID_IMAGE_TYPE      = 1;

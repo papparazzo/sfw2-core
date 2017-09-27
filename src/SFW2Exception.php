@@ -20,7 +20,7 @@
  *
  */
 
-namespace SFW2;
+namespace SFW2\Core;
 
 use Exception;
 

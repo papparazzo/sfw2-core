@@ -20,9 +20,9 @@
  *
  */
 
-namespace SFW2\Database;
+namespace SFW2\Core\Database;
 
-use SFW2\SFW2Exception;
+use SFW2\Core\SFW2Exception;
 
 class DatabaseException extends SFW2Exception {
     const CON_FAILED             = 1;

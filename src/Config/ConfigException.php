@@ -20,9 +20,9 @@
  *
  */
 
-namespace SFW2\Config;
+namespace SFW2\Core\Config;
 
-use SFW2\SFW2Exception;
+use SFW2\Core\SFW2Exception;
 
 class ConfigException extends SFW2Exception {
     const FILE_NOT_FOUND = 1;

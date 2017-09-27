@@ -20,7 +20,7 @@
  *
  */
 
-namespace SFW2;
+namespace SFW2\Core;
 
 class ErrorProvider {
     const IS_EMPTY              = '<NAME> darf nicht leer sein.';

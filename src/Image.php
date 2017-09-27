@@ -20,9 +20,9 @@
  *
  */
 
-namespace SFW2;
+namespace SFW2\Core;
 
-use SFW2\Image\ImageException;
+use SFW2\Core\Image\ImageException;
 
 class Image {
 

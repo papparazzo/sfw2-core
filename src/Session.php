@@ -20,7 +20,7 @@
  *
  */
 
-namespace SFW2;
+namespace SFW2\Core;
 
 class Session {
     #http://de3.php.net/manual/en/session.security.php#87608

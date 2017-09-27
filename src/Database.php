@@ -20,9 +20,9 @@
  *
  */
 
-namespace SFW2;
+namespace SFW2\Core;
 
-use SFW2\Database\DatabaseException;
+use SFW2\Core\Database\DatabaseException;
 use mysqli;
 
 class Database {
