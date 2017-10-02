@@ -20,9 +20,9 @@
  *
  */
 
-namespace SFW2\Validaotr;
+namespace SFW2\Core\Validator;
 
-use SFW2\SFW2Exception;
+use SFW2\Core\SFW2Exception;
 
 class ValidatorException extends SFW2Exception {
     const INVAL_DATA     = 1;
