@@ -22,12 +22,29 @@
 
 namespace SFW2\Core;
 
+use SFW2\Core\View\ViewException;
+
 class View {
 
-    /**
-     * @var array
-     */
-    protected $vars = array();
+    protected $vars        = array();
+    protected $jsfiles     = array();
+    protected $cssfiles    = array();
+
+    public function appendJSFiles(Array $files) {
+        $this->jsfiles = array_merge($this->jsfiles, $files);
+    }
+
+    public function appendJSFile($file) {
+        $this->jsfiles[] = $file;
+    }
+
+    public function appendCSSFiles(Array $files) {
+        $this->cssfiles = array_merge($this->cssfiles, $files);
+    }
+
+    public function appendCSSFile($file) {
+        $this->cssfiles[] = $file;
+    }
 
     public function assign($name, $val) {
         $this->vars[$name] = $val;
@@ -43,4 +60,11 @@ class View {
         }
         $this->vars[$name][] = $val;
     }
+
+    public function __isset($name) {
+        return isset($this->vars[$name]);
+    }
+
+
+
 }
