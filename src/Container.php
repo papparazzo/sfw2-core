@@ -28,6 +28,10 @@ use SFW2\Core\Container\ContainerException;
 class Container implements ArrayAccess {
     protected $data = array();
 
+    public function __construct(Array $data = array()) {
+        $this->insert($data);
+    }
+
     public function offsetExists($offset): bool {
         return isset($this->data[$offset]);
     }
@@ -49,5 +53,15 @@ class Container implements ArrayAccess {
 
     public function offsetUnset($offset): void {
         unset($this->data[$offset]);
+    }
+
+    protected function insert(Array $items) : array {
+        foreach($items as $key => $item) {
+            if(is_array($item)) {
+                $this->data[$key] = new self($item);
+                continue;
+            }
+            $this->data[$key] = $item;
+        }
     }
 }
