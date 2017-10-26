@@ -65,6 +65,13 @@ class View {
         return isset($this->vars[$name]);
     }
 
-
-
+    public function __get($name) {
+        if(!isset($this->vars[$name])) {
+            throw new ViewException('template-var "' . $name . '" not set');
+        }
+        $this->vars[$name] = View\Helper::getViewHelper(
+            $this->vars[$name]
+        );
+        return $this->vars[$name];
+    }
 }
