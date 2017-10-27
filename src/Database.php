@@ -29,7 +29,7 @@ class Database {
 
     protected $db = null;
 
-    public function __construct($host, $usr, $pwd, $db) {
+    public function __construct(string $host, string $usr, string $pwd, string $db) {
         $this->db = new mysqli($host, $usr, $pwd, $db);
         if(mysqli_connect_error()) {
             throw new DatabaseException(
@@ -40,18 +40,18 @@ class Database {
         $this->query("set names 'utf8';");
     }
 
-    public function delete($stmt, Array $params = []) {
+    public function delete(string $stmt, Array $params = []) : int {
         return $this->update($stmt, $params);
     }
 
-    public function update($stmt, Array $params = []) {
+    public function update(string $stmt, Array $params = []) : int {
         $params = $this->escape($params);
         $stmt = vsprintf($stmt, $params);
         $this->query($stmt);
         return $this->db->affected_rows;
     }
 
-    public function insert($stmt, Array $params = []) {
+    public function insert(string $stmt, Array $params = []) : int {
         $params = $this->escape($params);
         $stmt = vsprintf($stmt, $params);
         $this->query($stmt);
@@ -59,8 +59,8 @@ class Database {
     }
 
     public function select(
-        $stmt, Array $params = [], $offset = -1, $count = -1
-    ) {
+        string $stmt, Array $params = [], int $offset = -1, int $count = -1
+    ) : Array {
         $params = $this->escape($params);
         $stmt  = vsprintf($stmt, $params);
         $stmt .= $this->addLimit($offset, $count);
@@ -74,7 +74,7 @@ class Database {
         return $rv;
     }
 
-    public function selectRow($stmt, Array $params = array(), $row = 0) {
+    public function selectRow(string $stmt, Array $params = [], int $row = 0) : array {
         $res = $this->select($stmt, $params, $row, 1);
         if(empty($res)) {
             return array();
@@ -82,7 +82,7 @@ class Database {
         return array_shift($res);
     }
 
-    public function selectSingle($stmt, Array $params = array()) {
+    public function selectSingle(string $stmt, Array $params = []) {
         $res = $this->selectRow($stmt, $params);
         if(empty($res)) {
             return null;
@@ -91,8 +91,8 @@ class Database {
     }
 
     public function selectKeyValue(
-        $key, $value, $table, $where = "", Array $params = array()
-    ) {
+        string $key, string $value, string $table, string $where = "", Array $params = []
+    ) : Array {
         $key = $this->escape($key);
         $value = $this->escape($value);
         $table = $this->escape($table);
@@ -117,8 +117,8 @@ class Database {
     }
 
     public function selectKeyValues(
-        $key, Array $values, $table, $where = "", Array $params = array()
-    ) {
+        string $key, Array $values, string $table, string $where = "", Array $params = []
+    ) : array {
         $key = $this->escape($key);
         $table = $this->escape($table);
         $values = $this->escape($values);
@@ -146,7 +146,7 @@ class Database {
     }
 
     public function selectCount(
-        $table, Array $where = array(), Array $params = array(), $join = 'AND'
+        string $table, Array $where = [], Array $params = [], string $join = 'AND'
     ) {
         $stmt =
             "SELECT COUNT(*) AS `cnt` " .
@@ -158,7 +158,7 @@ class Database {
         return $this->selectSingle($stmt, $params);
     }
 
-    public function entryExists($table, $column, $content) {
+    public function entryExists(string $table, string $column, string $content) {
         $where = array();
         $where[] = '`' . $column . '` = \''. $this->escape($content) . '\'';
         if($this->selectCount($table, $where) == 0) {
@@ -167,7 +167,7 @@ class Database {
         return true;
     }
 
-    public function escape($data) {
+    public function escape(string $data) : Array {
         if(!is_array($data)) {
             return $this->db->escape_string($data);
         }
@@ -178,7 +178,7 @@ class Database {
         return $rv;
     }
 
-    public function convertFromMysqlDate($date) {
+    public function convertFromMysqlDate(string $date) : string {
         if(empty($date)) {
             return '';
         }
@@ -191,11 +191,11 @@ class Database {
             return '0000-00-00';
         }
 
-        $date = \explode('.', $date);
+        $date = explode('.', $date);
         return $date[2] . '-' . $date[1] . '-' . $date[0];
     }
 
-    private function query($stmt) {
+    private function query(string $stmt) {
         $res = $this->db->query($stmt);
         if($res === false) {
             throw new DatabaseException(
@@ -206,9 +206,9 @@ class Database {
         return $res;
     }
 
-    private function addLimit($offset, $count) {
-        $offset = \preg_replace('/[^0-9-]/', '', $offset);
-        $count = \preg_replace('/[^0-9-]/', '', $count);
+    private function addLimit(int $offset, int $count) {
+        $offset = preg_replace('/[^0-9-]/', '', $offset);
+        $count = preg_replace('/[^0-9-]/', '', $count);
 
         if($offset == -1 || $count == -1) {
             return "";

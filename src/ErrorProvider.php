@@ -62,7 +62,7 @@ class ErrorProvider {
     protected $errors      = [];
     protected $warnings    = [];
 
-    public function addError($errno, $rp = [], $id = null) {
+    public function addError(string $errno, array $rp = [], string $id = null) {
         $keys = array_keys($rp);
         $vals = array_values($rp);
         $this->errors[] = [
@@ -71,7 +71,7 @@ class ErrorProvider {
         ];
     }
 
-    public function addWarning($errno, $rp = [], $id = null) {
+    public function addWarning(string $errno, array $rp = [], string $id = null) {
         $keys = array_keys($rp);
         $vals = array_values($rp);
         $this->warnings[] = [
@@ -80,7 +80,7 @@ class ErrorProvider {
         ];
     }
 
-    public function getContent($clearBuffer = false) {
+    public function getContent(bool $clearBuffer = false) : array {
         if($clearBuffer) {
             $this->clearBuffer();
         }
@@ -91,11 +91,11 @@ class ErrorProvider {
         ];
     }
 
-    public function hasErrors($id = null) {
+    public function hasErrors(string $id = null) : string {
         return $this->checkArray($this->errors, $id);
     }
 
-    public function hasWarning($id = null) {
+    public function hasWarning(string $id = null) {
         return $this->checkArray($this->warnings, $id);
     }
 
@@ -104,7 +104,7 @@ class ErrorProvider {
         $this->warnings = [];
     }
 
-    private function checkArray($arr, $id = null) {
+    private function checkArray(array $arr, string $id = null) : bool {
         if($id == null) {
             return !empty($arr);
         }

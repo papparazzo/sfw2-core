@@ -31,7 +31,7 @@ class Session {
     protected $path          = null;
     protected $serverName    = '';
 
-    public function __construct($serverName) {
+    public function __construct(string $serverName) {
         $this->path = self::GLOBAL_SECTION;
         $this->serverName = $serverName;
         $this->startSession();
@@ -47,7 +47,7 @@ class Session {
         session_regenerate_id(true);
     }
 
-    public function setPath($path) {
+    public function setPath(string $path) {
         if(!empty($path)) {
             $this->path = 'p' . $path;
         }
@@ -62,19 +62,19 @@ class Session {
         $_SESSION = array();
     }
 
-    public function isPathEntrySet($index) {
+    public function isPathEntrySet(string $index) {
         return $this->isEntrySet($index, $this->path);
     }
 
-    public function getPathEntry($index) {
+    public function getPathEntry(string $index) {
         return $this->getEntry($index, $this->path);
     }
 
-    public function setPathEntry($index, $val) {
+    public function setPathEntry(string $index, $val) {
         $this->setEntry($index, $val, $this->path);
     }
 
-    public function delPathEntry($index) {
+    public function delPathEntry(string $index) {
         return $this->delEntry($index, $this->path);
     }
 
@@ -82,19 +82,19 @@ class Session {
         return $this->delAllEntries($this->path);
     }
 
-    public function isGlobalEntrySet($index) {
+    public function isGlobalEntrySet(string $index) {
         return $this->isEntrySet($index, self::GLOBAL_SECTION);
     }
 
-    public function getGlobalEntry($index) {
+    public function getGlobalEntry(string $index) {
         return $this->getEntry($index, self::GLOBAL_SECTION);
     }
 
-    public function setGlobalEntry($index, $val) {
+    public function setGlobalEntry(string $index, $val) {
         $this->setEntry($index, $val, self::GLOBAL_SECTION);
     }
 
-    public function delGlobalEntry($index) {
+    public function delGlobalEntry(string $index) {
         return $this->delEntry($index, self::GLOBAL_SECTION);
     }
 
@@ -102,13 +102,13 @@ class Session {
         return $this->delAllEntries(self::GLOBAL_SECTION);
     }
 
-    public function generateToken() {
+    public function generateToken() : string {
         $token = md5(microtime() . mt_rand());
         $this->setGlobalEntry('xss_token', $token);
         return $token;
     }
 
-    public function compareToken($rtoken) {
+    public function compareToken(string $rtoken) : bool {
         $token = $this->getGlobalEntry('xss_token');
         if($token == null) {
             return false;
@@ -117,7 +117,7 @@ class Session {
         return ($rtoken == $token);
     }
 
-    public function getToken() {
+    public function getToken() : string {
         $token = $this->getGlobalEntry('xss_token');
         $this->delGlobalEntry('xss_token');
         return $token;
@@ -134,25 +134,25 @@ class Session {
         session_set_cookie_params(1800, '/', $domain, false, true);
         session_start();
     }
-    protected function isEntrySet($index, $section) {
+    protected function isEntrySet(string $index, $section) : bool {
         if(isset($_SESSION[$section][$index])) {
             return true;
         }
         return false;
     }
 
-    protected function getEntry($index, $section) {
+    protected function getEntry(string $index, $section) {
         if(!isset($_SESSION[$section][$index])) {
             return null;
         }
         return unserialize($_SESSION[$section][$index]);
     }
 
-    protected function setEntry($index, $val, $section) {
-        $_SESSION[$section][$index] = \serialize($val);
+    protected function setEntry(string $index, $val, $section) {
+        $_SESSION[$section][$index] = serialize($val);
     }
 
-    protected function delEntry($index, $section) {
+    protected function delEntry(string $index, $section) : bool {
         if(!isset($_SESSION[$section][$index])) {
             return false;
         }
@@ -160,7 +160,7 @@ class Session {
         return true;
     }
 
-    protected function delAllEntries($section) {
+    protected function delAllEntries(string $section) : bool {
         if(!isset($_SESSION[$section])) {
             return false;
         }

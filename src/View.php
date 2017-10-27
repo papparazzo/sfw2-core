@@ -34,7 +34,7 @@ class View {
         $this->jsfiles = array_merge($this->jsfiles, $files);
     }
 
-    public function appendJSFile($file) {
+    public function appendJSFile(string $file) {
         $this->jsfiles[] = $file;
     }
 
@@ -42,11 +42,11 @@ class View {
         $this->cssfiles = array_merge($this->cssfiles, $files);
     }
 
-    public function appendCSSFile($file) {
+    public function appendCSSFile(string $file) {
         $this->cssfiles[] = $file;
     }
 
-    public function assign($name, $val) {
+    public function assign(string $name, $val) {
         $this->vars[$name] = $val;
     }
 
@@ -54,18 +54,18 @@ class View {
         $this->vars = array_merge($this->vars, $values);
     }
 
-    public function append($name, $val) {
+    public function append(string $name, $val) {
         if(!isset($this->vars[$name])) {
             $this->vars[$name] = [];
         }
         $this->vars[$name][] = $val;
     }
 
-    public function __isset($name) {
+    public function __isset(string $name) : bool {
         return isset($this->vars[$name]);
     }
 
-    public function __get($name) {
+    public function __get(string $name) {
         if(!isset($this->vars[$name])) {
             throw new ViewException('template-var "' . $name . '" not set');
         }

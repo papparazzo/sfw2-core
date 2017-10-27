@@ -32,18 +32,18 @@ class Container implements ArrayAccess {
         $this->insert($data);
     }
 
-    public function offsetExists($offset): bool {
+    public function offsetExists(string $offset): bool {
         return isset($this->data[$offset]);
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet(string $offset) {
         if(!isset($this->data[$offset])) {
             throw new ContainerException('Offset "' . $offset . '" not set ');
         }
         return $this->data[$offset];
     }
 
-    public function offsetSet($offset, $value): void {
+    public function offsetSet(string $offset, $value) {
         if(is_null($offset)) {
             $this->data[] = $value;
         } else {
@@ -51,11 +51,11 @@ class Container implements ArrayAccess {
         }
     }
 
-    public function offsetUnset($offset): void {
+    public function offsetUnset(string $offset) {
         unset($this->data[$offset]);
     }
 
-    protected function insert(Array $items) : array {
+    protected function insert(Array $items) : Array {
         foreach($items as $key => $item) {
             if(is_array($item)) {
                 $this->data[$key] = new self($item);

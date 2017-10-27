@@ -55,9 +55,9 @@ class Validator {
     }
 
     public function getData(
-        $key, $regEx = '', $mustSet = false, $caption = '',
-        $errType = ErrorProvider::IS_EMPTY
-    ) {
+        string $key, string $regEx = '', bool $mustSet = false,
+        string $caption = '', string $errType = ErrorProvider::IS_EMPTY
+    ) : string {
         $data = '';
         if(isset($this->data[$key])) {
             $data = $this->data[$key];
@@ -88,7 +88,9 @@ class Validator {
         return $rv;
     }
 
-    public function getHref($key, $mustSet = false, $caption = '') {
+    public function getHref(
+        string $key, bool $mustSet = false, string $caption = ''
+    ) : string {
         $rev = $this->getData($key, self::REGEX_ALL, $mustSet, $caption);
         if($rev === '' && !$mustSet) {
             return $rev;
@@ -100,7 +102,7 @@ class Validator {
         return $rev;
     }
 
-    public function getTime($key, $mustSet = false, $caption = '') {
+    public function getTime(string $key, bool $mustSet = false, string $caption = '') : string {
         $data = $this->getData($key, self::REGEX_TIME, $mustSet, $caption, ErrorProvider::INVALID_TIME);
 
         if($data == '' || $this->errpro->hasErrors($key)) {
@@ -129,7 +131,7 @@ class Validator {
         return $rv . $frc[1];
     }
 
-    public function getDate($key, $mustSet = false, $caption = '', $mustFuture = false) {
+    public function getDate(string $key, bool $mustSet = false, string $caption = '', bool $mustFuture = false) : string {
         $data = $this->getData($key, self::REGEX_DATE, $mustSet, $caption, ErrorProvider::INVALID_DATE);
 
         if($data == '' || $this->errpro->hasErrors($key)) {

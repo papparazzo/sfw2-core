@@ -29,7 +29,7 @@ class Config {
     protected $conf = [];
     protected $objects = [];
 
-    public function __construct($configFile, $defaultFile) {
+    public function __construct(string $configFile, string $defaultFile) {
         $this->checkConfigFile($configFile);
         $this->checkConfigFile($defaultFile);
 
@@ -39,7 +39,7 @@ class Config {
         );
     }
 
-    protected function checkConfigFile($configFile) {
+    protected function checkConfigFile(string $configFile) {
         if(!is_readable($configFile)) {
             throw new ConfigException(
                 'config-file <' . $configFile . '> is not readable',
@@ -48,14 +48,14 @@ class Config {
         }
     }
 
-    public function getVal($section, $key, $def = null) {
+    public function getVal(string $section, string $key, $def = null) {
         if(!isset($this->conf[$section][$key])) {
             return $def;
         }
         return $this->conf[$section][$key];
     }
 
-    public function getSection($section) : array {
+    public function getSection(string $section) : Array {
         if(!isset($this->conf[$section])) {
             return [];
         }

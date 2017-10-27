@@ -40,11 +40,11 @@ class Image {
 
     protected $path = '';
 
-    public function __construct($path) {
+    public function __construct(string $path) {
         $this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
-    public function storeImage($data) {
+    public function storeImage(string $data) : string {
         $this->createDirs();
 
         $chunk = explode(';', $data);
@@ -118,7 +118,7 @@ class Image {
         }
     }
 
-    public function getImage($file) {
+    public function getImage($file) : Array {
         return array(
             'thumb'   => DIRECTORY_SEPARATOR . $this->path . self::DIR_THUMB_RES . $file,
             'regular' => DIRECTORY_SEPARATOR . $this->path . self::DIR_REGULAR_RES . $file,
@@ -126,7 +126,7 @@ class Image {
         );
     }
 
-    protected function generateThumb($file, $size, $src, $des) {
+    protected function generateThumb($file, $size, $src, $des) : bool {
         if(!is_file($src . DIRECTORY_SEPARATOR . $file)) {
             return false;
         }
