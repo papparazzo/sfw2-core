@@ -26,9 +26,15 @@ use SFW2\Core\View\ViewException;
 
 class View {
 
-    protected $vars        = array();
-    protected $jsfiles     = array();
-    protected $cssfiles    = array();
+    protected $vars        = [];
+    protected $jsfiles     = [];
+    protected $cssfiles    = [];
+
+    protected $templateId  = 0;
+
+    public function __construct($templateId = 0) {
+        $this->templateId  = $templateId;
+    }
 
     public function appendJSFiles(Array $files) {
         $this->jsfiles = array_merge($this->jsfiles, $files);
@@ -61,17 +67,61 @@ class View {
         $this->vars[$name][] = $val;
     }
 
+    public function __toString() : string {
+        return $this->getContent();
+    }
+
     public function __isset(string $name) : bool {
         return isset($this->vars[$name]);
     }
 
     public function __get(string $name) {
-        if(!isset($this->vars[$name])) {
-            throw new ViewException('template-var "' . $name . '" not set');
+        if(isset($this->vars[$name])) {
+            $this->vars[$name] = View\Helper::getViewHelper($this->vars[$name]);
+            return $this->vars[$name];
         }
-        $this->vars[$name] = View\Helper::getViewHelper(
-            $this->vars[$name]
+        throw new ViewException(
+            'template-var "' . $name . '" not set',
+            ViewException::VARIABLE_MISSING
         );
-        return $this->vars[$name];
+    }
+
+    public function getCSSFiles() : Array {
+        return $this->cssfiles;
+    }
+
+    public function getJSFiles() : Array {
+        return $this->jsfiles;
+    }
+
+    public function getTemplateId() : int {
+        return $this->templateId;
+    }
+
+    public function getContent(string $tpl) : string {
+        ob_start();
+        $this->showContent($tpl);
+        return ob_get_clean();
+    }
+
+    public function showContent(string $tplFile) {
+        if(file_exists($tplFile) && is_readable($tplFile)) {
+            $this->loadTemplateFile($tplFile);
+            return;
+        }
+        throw new ViewException(
+            'Could not find template "' . $tplFile . '"',
+            ViewException::TEMPLATE_MISSING
+        );
+    }
+
+   protected function loadTemplateFile($file) {
+        if(!isset($this->vars['modiDate']) || $this->vars['modiDate'] == '') {
+            $this->vars['modiDate'] = new DateTime(
+                '@' . filemtime($file),
+                new DateTimeZone('Europe/Berlin')
+            );
+        }
+        include($file);
     }
 }
