@@ -25,4 +25,6 @@ namespace SFW2\Core\View;
 use SFW2\Core\SFW2Exception;
 
 class ViewException extends SFW2Exception {
+    const TEMPLATE_MISSING = 1;
+    const VARIABLE_MISSING = 2;
 }
