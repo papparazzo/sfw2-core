@@ -24,6 +24,9 @@ namespace SFW2\Core;
 
 use SFW2\Core\View\ViewException;
 
+use DateTime;
+use DateTimeZone;
+
 class View {
 
     protected $vars        = [];
