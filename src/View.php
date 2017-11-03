@@ -30,8 +30,8 @@ use DateTimeZone;
 class View {
 
     protected $vars        = [];
-    protected $jsfiles     = [];
-    protected $cssfiles    = [];
+    protected $jsFiles     = [];
+    protected $cssFiles    = [];
 
     protected $templateId  = 0;
 
@@ -40,19 +40,19 @@ class View {
     }
 
     public function appendJSFiles(Array $files) {
-        $this->jsfiles = array_merge($this->jsfiles, $files);
+        $this->jsFiles = array_merge($this->jsFiles, $files);
     }
 
     public function appendJSFile(string $file) {
-        $this->jsfiles[] = $file;
+        $this->jsFiles[] = $file;
     }
 
     public function appendCSSFiles(Array $files) {
-        $this->cssfiles = array_merge($this->cssfiles, $files);
+        $this->cssFiles = array_merge($this->cssFiles, $files);
     }
 
     public function appendCSSFile(string $file) {
-        $this->cssfiles[] = $file;
+        $this->cssFiles[] = $file;
     }
 
     public function assign(string $name, $val) {
@@ -90,11 +90,11 @@ class View {
     }
 
     public function getCSSFiles() : Array {
-        return $this->cssfiles;
+        return $this->cssFiles;
     }
 
     public function getJSFiles() : Array {
-        return $this->jsfiles;
+        return $this->jsFiles;
     }
 
     public function getTemplateId() : int {
