@@ -24,7 +24,7 @@ namespace SFW2\Core;
 
 use SFW2\Core\ErrorProvider;
 
-class Validator {
+class DataProvider {
    protected $data = array();
 
     const REGEX_TEXT_SIMPLE = '#^[A-Za-zäÄöÖüÜß0-9]+$#';
@@ -244,7 +244,4 @@ class Validator {
     public function getErrorProvider() {
         return $this->errpro;
     }
-
-
-
 }
