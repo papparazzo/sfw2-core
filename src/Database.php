@@ -195,11 +195,11 @@ class Database {
         return $date[2] . '-' . $date[1] . '-' . $date[0];
     }
 
-    private function query(string $stmt) {
+    public function query(string $stmt) {
         $res = $this->db->query($stmt);
         if($res === false) {
             throw new DatabaseException(
-                "query <" . $stmt . "> failed! \n\n" . $this->db->error,
+                'query "' . $stmt . '" failed!' . PHP_EOL . PHP_EOL . $this->db->error,
                 DatabaseException::QUERY_FAILED
             );
         }
