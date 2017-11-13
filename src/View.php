@@ -29,30 +29,11 @@ use DateTimeZone;
 
 class View {
 
-    protected $vars        = [];
-    protected $jsFiles     = [];
-    protected $cssFiles    = [];
-
-    protected $templateId  = 0;
+    protected $vars       = [];
+    protected $templateId = 0;
 
     public function __construct($templateId = 0) {
         $this->templateId  = $templateId;
-    }
-
-    public function appendJSFiles(Array $files) {
-        $this->jsFiles = array_merge($this->jsFiles, $files);
-    }
-
-    public function appendJSFile(string $file) {
-        $this->jsFiles[] = $file;
-    }
-
-    public function appendCSSFiles(Array $files) {
-        $this->cssFiles = array_merge($this->cssFiles, $files);
-    }
-
-    public function appendCSSFile(string $file) {
-        $this->cssFiles[] = $file;
     }
 
     public function assign(string $name, $val) {
@@ -80,21 +61,12 @@ class View {
 
     public function __get(string $name) {
         if(isset($this->vars[$name])) {
-            $this->vars[$name] = View\Helper::getViewHelper($this->vars[$name]);
             return $this->vars[$name];
         }
         throw new ViewException(
             'template-var "' . $name . '" not set',
             ViewException::VARIABLE_MISSING
         );
-    }
-
-    public function getCSSFiles() : Array {
-        return $this->cssFiles;
-    }
-
-    public function getJSFiles() : Array {
-        return $this->jsFiles;
     }
 
     public function getTemplateId() : int {
@@ -119,10 +91,10 @@ class View {
     }
 
    protected function loadTemplateFile($file) {
-        if(!isset($this->vars['modiDate']) || $this->vars['modiDate'] == '') {
-            $this->vars['modiDate'] = new DateTime(
+        if(!isset($this->vars['modificationDate']) || $this->vars['modificationDate'] == '') {
+            $this->vars['modificationDate'] = new DateTime(
                 '@' . filemtime($file),
-                new DateTimeZone('Europe/Berlin')
+                new DateTimeZone('Europe/Berlin') // TODO: remove dependency
             );
         }
         include($file);
