@@ -71,7 +71,7 @@ class Session {
     }
 
     public function setPathEntry(string $index, $val) {
-        $this->setEntry($index, $val, $this->path);
+        $this->setEntry($index, $this->path, $val);
     }
 
     public function delPathEntry(string $index) {
@@ -91,7 +91,7 @@ class Session {
     }
 
     public function setGlobalEntry(string $index, $val) {
-        $this->setEntry($index, $val, self::GLOBAL_SECTION);
+        $this->setEntry($index, self::GLOBAL_SECTION, $val);
     }
 
     public function delGlobalEntry(string $index) {
@@ -141,18 +141,18 @@ class Session {
         return false;
     }
 
-    protected function getEntry(string $index, $section) {
+    protected function getEntry(string $index, string $section) {
         if(!isset($_SESSION[$section][$index])) {
             return null;
         }
         return unserialize($_SESSION[$section][$index]);
     }
 
-    protected function setEntry(string $index, $val, $section) {
+    protected function setEntry(string $index, string $section, $val) {
         $_SESSION[$section][$index] = serialize($val);
     }
 
-    protected function delEntry(string $index, $section) : bool {
+    protected function delEntry(string $index, string $section) : bool {
         if(!isset($_SESSION[$section][$index])) {
             return false;
         }
