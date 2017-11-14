@@ -31,16 +31,18 @@ class View {
 
     protected $vars       = [];
     protected $templateId = 0;
+    protected $template   = null;
 
-    public function __construct($templateId = 0) {
-        $this->templateId  = $templateId;
+    public function __construct($templateId = 0, string $template = null) {
+        $this->templateId = $templateId;
+        $this->template   = $template;
     }
 
     public function assign(string $name, $val) {
         $this->vars[$name] = $val;
     }
 
-    public function assignArray(Array $values) {
+    public function assignArray(array $values) {
         $this->vars = array_merge($this->vars, $values);
     }
 
@@ -73,24 +75,25 @@ class View {
         return $this->templateId;
     }
 
-    public function getContent(string $tpl) : string {
+    public function getContent() {
+        if($this->template == null) {
+            $this->vars['templateId'] = $this->getTemplateId();
+            return $this->vars;
+        }
+
         ob_start();
-        $this->showContent($tpl);
+        $this->showContent();
         return ob_get_clean();
     }
 
-    public function showContent(string $tplFile) {
-        if(file_exists($tplFile) && is_readable($tplFile)) {
-            $this->loadTemplateFile($tplFile);
-            return;
+    protected function showContent() {
+        if(!file_exists($this->template) || !is_readable($this->template)) {
+            throw new ViewException(
+               'Could not find template "' . $tplFile . '"',
+                ViewException::TEMPLATE_MISSING
+            );
         }
-        throw new ViewException(
-            'Could not find template "' . $tplFile . '"',
-            ViewException::TEMPLATE_MISSING
-        );
-    }
 
-   protected function loadTemplateFile($file) {
         if(!isset($this->vars['modificationDate']) || $this->vars['modificationDate'] == '') {
             $this->vars['modificationDate'] = new DateTime(
                 '@' . filemtime($file),
