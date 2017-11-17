@@ -33,7 +33,7 @@ class View {
     protected $templateId = 0;
     protected $template   = null;
 
-    public function __construct($templateId = 0, string $template = null) {
+    public function __construct(int $templateId = 0, string $template = null) {
         $this->templateId = $templateId;
         $this->template   = $template;
     }
