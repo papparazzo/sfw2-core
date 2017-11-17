@@ -89,17 +89,17 @@ class View {
     protected function showContent() {
         if(!file_exists($this->template) || !is_readable($this->template)) {
             throw new ViewException(
-               'Could not find template "' . $tplFile . '"',
+               'Could not find template "' . $this->template . '"',
                 ViewException::TEMPLATE_MISSING
             );
         }
 
         if(!isset($this->vars['modificationDate']) || $this->vars['modificationDate'] == '') {
             $this->vars['modificationDate'] = new DateTime(
-                '@' . filemtime($file),
+                '@' . filemtime($this->template),
                 new DateTimeZone('Europe/Berlin') // TODO: remove dependency
             );
         }
-        include($file);
+        include($this->template);
     }
 }
