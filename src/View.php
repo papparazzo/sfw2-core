@@ -53,6 +53,13 @@ class View {
         $this->vars[$name][] = $val;
     }
 
+    public function appendArray(string $name, array $values) {
+     if(!isset($this->vars[$name])) {
+            $this->vars[$name] = [];
+        }
+        $this->vars[$name] = array_merge($this->vars[$name], $values);
+    }
+
     public function __toString() : string {
         return $this->getContent();
     }
