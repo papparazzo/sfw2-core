@@ -33,7 +33,7 @@ class View {
     protected $templateId = 0;
     protected $template   = null;
 
-    public function __construct(int $templateId = 0, string $template = null) {
+    public function __construct(string $template = null, int $templateId = 0) {
         $this->templateId = $templateId;
         $this->template   = $template;
     }
@@ -85,7 +85,7 @@ class View {
     public function getContent() {
         if($this->template == null) {
             $this->vars['templateId'] = $this->getTemplateId();
-            return $this->vars;
+            return print_r($this->vars, true);
         }
 
         ob_start();
