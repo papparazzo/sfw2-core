@@ -83,11 +83,6 @@ class View {
     }
 
     public function getContent() {
-        if($this->template == null) {
-            $this->vars['templateId'] = $this->getTemplateId();
-            return print_r($this->vars, true);
-        }
-
         ob_start();
         $this->showContent();
         return ob_get_clean();
