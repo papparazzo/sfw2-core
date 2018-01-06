@@ -30,7 +30,7 @@ class SFW2Exception extends Exception {
     protected $timeStamp = '';
     protected $identifier = '';
 
-    public function __construct(string $msg, string $code = self::UNKNOWN, $prev = null) {
+    public function __construct(string $msg, int $code = self::UNKNOWN, $prev = null) {
         $this->timeStamp = date('d.m.Y H:i:s');
         $this->identifier = strtoupper(md5(microtime() . mt_rand()));
         $msg = wordwrap($msg, 150) . PHP_EOL;

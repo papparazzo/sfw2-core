@@ -40,18 +40,18 @@ class Database {
         $this->query("set names 'utf8';");
     }
 
-    public function delete(string $stmt, Array $params = []) : int {
+    public function delete(string $stmt, array $params = []) : int {
         return $this->update($stmt, $params);
     }
 
-    public function update(string $stmt, Array $params = []) : int {
+    public function update(string $stmt, array $params = []) : int {
         $params = $this->escape($params);
         $stmt = vsprintf($stmt, $params);
         $this->query($stmt);
         return $this->db->affected_rows;
     }
 
-    public function insert(string $stmt, Array $params = []) : int {
+    public function insert(string $stmt, array $params = []) : int {
         $params = $this->escape($params);
         $stmt = vsprintf($stmt, $params);
         $this->query($stmt);
@@ -60,7 +60,7 @@ class Database {
 
     public function select(
         string $stmt, Array $params = [], int $offset = -1, int $count = -1
-    ) : Array {
+    ) : array {
         $params = $this->escape($params);
         $stmt  = vsprintf($stmt, $params);
         $stmt .= $this->addLimit($offset, $count);
@@ -74,7 +74,7 @@ class Database {
         return $rv;
     }
 
-    public function selectRow(string $stmt, Array $params = [], int $row = 0) : array {
+    public function selectRow(string $stmt, array $params = [], int $row = 0) : array {
         $res = $this->select($stmt, $params, $row, 1);
         if(empty($res)) {
             return array();
@@ -82,7 +82,7 @@ class Database {
         return array_shift($res);
     }
 
-    public function selectSingle(string $stmt, Array $params = []) {
+    public function selectSingle(string $stmt, array $params = []) {
         $res = $this->selectRow($stmt, $params);
         if(empty($res)) {
             return null;
@@ -91,8 +91,8 @@ class Database {
     }
 
     public function selectKeyValue(
-        string $key, string $value, string $table, string $where = "", Array $params = []
-    ) : Array {
+        string $key, string $value, string $table, string $where = "", array $params = []
+    ) : array {
         $key = $this->escape($key);
         $value = $this->escape($value);
         $table = $this->escape($table);
@@ -117,7 +117,7 @@ class Database {
     }
 
     public function selectKeyValues(
-        string $key, Array $values, string $table, string $where = "", Array $params = []
+        string $key, array $values, string $table, string $where = "", array $params = []
     ) : array {
         $key = $this->escape($key);
         $table = $this->escape($table);
@@ -135,7 +135,7 @@ class Database {
 
         $stmt  = vsprintf($stmt, $params);
         $res = $this->query($stmt);
-        $rv = array();
+        $rv = [];
         while(($row = $res->fetch_assoc())) {
             $key = $row['k'];
             unset($row['k']);
@@ -146,7 +146,7 @@ class Database {
     }
 
     public function selectCount(
-        string $table, Array $where = [], Array $params = [], string $join = 'AND'
+        string $table, array $where = [], array $params = [], string $join = 'AND'
     ) {
         $stmt =
             "SELECT COUNT(*) AS `cnt` " .
@@ -158,7 +158,7 @@ class Database {
         return $this->selectSingle($stmt, $params);
     }
 
-    public function entryExists(string $table, string $column, string $content) {
+    public function entryExists(string $table, string $column, string $content) : bool {
         $where = array();
         $where[] = '`' . $column . '` = \''. $this->escape($content) . '\'';
         if($this->selectCount($table, $where) == 0) {
@@ -167,7 +167,7 @@ class Database {
         return true;
     }
 
-    public function escape(string $data) : Array {
+    public function escape($data) {
         if(!is_array($data)) {
             return $this->db->escape_string($data);
         }
@@ -186,7 +186,7 @@ class Database {
         return $d . '.' . $m . '.' . $y;
     }
 
-    public function convertToMysqlDate($date) {
+    public function convertToMysqlDate($date) : string {
         if(empty($date)) {
             return '0000-00-00';
         }
@@ -206,7 +206,7 @@ class Database {
         return $res;
     }
 
-    private function addLimit(int $offset, int $count) {
+    private function addLimit(int $offset, int $count) : string {
         $offset = preg_replace('/[^0-9-]/', '', $offset);
         $count = preg_replace('/[^0-9-]/', '', $count);
 
