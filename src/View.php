@@ -97,10 +97,10 @@ class View {
         }
 
         if(!isset($this->vars['modificationDate']) || $this->vars['modificationDate'] == '') {
-            $this->vars['modificationDate'] = new DateTime(
+            $this->vars['modificationDate'] = strftime('%a., %d. %b. %G', (new DateTime(
                 '@' . filemtime($this->template),
                 new DateTimeZone('Europe/Berlin') // TODO: remove dependency
-            );
+            ))->getTimestamp()); #Mi., 11. Mai. 2016
         }
         include($this->template);
     }
