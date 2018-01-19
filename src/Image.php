@@ -119,11 +119,11 @@ class Image {
     }
 
     public function getImage($file) : Array {
-        return array(
+        return [
             'thumb'   => DIRECTORY_SEPARATOR . $this->path . self::DIR_THUMB_RES . $file,
             'regular' => DIRECTORY_SEPARATOR . $this->path . self::DIR_REGULAR_RES . $file,
             'high'    => DIRECTORY_SEPARATOR . $this->path . self::DIR_REGULAR_RES . $file
-        );
+        ];
     }
 
     protected function generateThumb($file, $size, $src, $des) : bool {
