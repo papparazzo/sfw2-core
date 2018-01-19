@@ -178,14 +178,16 @@ class Database {
         return $rv;
     }
 
+    // TODO: Make it better
     public function convertFromMysqlDate(string $date) : string {
         if(empty($date)) {
             return '';
         }
-        list($y, $m, $d) = \explode("-", $date);
+        list($y, $m, $d) = explode("-", $date);
         return $d . '.' . $m . '.' . $y;
     }
 
+    // TODO: Make it better
     public function convertToMysqlDate($date) : string {
         if(empty($date)) {
             return '0000-00-00';
