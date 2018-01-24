@@ -20,9 +20,11 @@
  *
  */
 
-namespace SFW2\Core\Container;
+namespace SFW2\Core\Config;
 
 use SFW2\Core\SFW2Exception;
 
-class ContainerException extends SFW2Exception {
+class Exception extends SFW2Exception {
+    const FILE_NOT_FOUND = 1;
+    const OBJECT_NOT_FOUND = 2;
 }

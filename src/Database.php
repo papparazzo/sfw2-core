@@ -22,7 +22,7 @@
 
 namespace SFW2\Core;
 
-use SFW2\Core\Database\DatabaseException;
+use SFW2\Core\Database\Exception as DatabaseException;
 use mysqli;
 
 class Database {

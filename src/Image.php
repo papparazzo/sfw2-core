@@ -22,7 +22,7 @@
 
 namespace SFW2\Core;
 
-use SFW2\Core\Image\ImageException;
+use SFW2\Core\Image\Exception as ImageException;
 
 class Image {
 

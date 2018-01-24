@@ -22,7 +22,7 @@
 
 namespace SFW2\Core;
 
-use SFW2\Core\Config\ConfigException;
+use SFW2\Core\Config\Exception as ConfigException;
 
 class Config {
 

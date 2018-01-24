@@ -22,7 +22,7 @@
 
 namespace SFW2\Core;
 
-use SFW2\Core\View\ViewException;
+use SFW2\Core\View\Exception as ViewException;
 
 use DateTime;
 use DateTimeZone;

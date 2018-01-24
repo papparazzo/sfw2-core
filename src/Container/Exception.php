@@ -20,13 +20,9 @@
  *
  */
 
-namespace SFW2\Core\Database;
+namespace SFW2\Core\Container;
 
 use SFW2\Core\SFW2Exception;
 
-class DatabaseException extends SFW2Exception {
-    const CON_FAILED             = 1;
-    const NO_ROW_FETCHED_SEL_ROW = 2;
-    const NO_ROW_FETCHED_SEL_SNG = 3;
-    const QUERY_FAILED           = 4;
+class Exception extends SFW2Exception {
 }

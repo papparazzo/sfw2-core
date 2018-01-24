@@ -23,7 +23,7 @@
 namespace SFW2\Core;
 
 use ArrayAccess;
-use SFW2\Core\Container\ContainerException;
+use SFW2\Core\Container\Exception as ContainerException;
 
 class Container implements ArrayAccess {
     protected $data = array();
