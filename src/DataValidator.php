@@ -22,7 +22,7 @@
 
 namespace SFW2\Core;
 
-use SFW2\Core\DataProvider\Exception as DataProviderException;
+use SFW2\Core\DataValidator\Exception as DataValidatorException;
 
 class DataValidator {
     protected $data = [];
@@ -54,7 +54,7 @@ class DataValidator {
             return $data;
         }
         if($data == '') {
-            throw new DataProviderException('data not set', DataProviderException::IS_EMPTY);
+            throw new DataValidatorException('data not set', DataValidatorException::IS_EMPTY);
         }
         if($regEx == '') {
             return $data;
@@ -63,9 +63,9 @@ class DataValidator {
         if(preg_match($regEx, $data)) {
             return $data;
         }
-        throw new DataProviderException(
+        throw new DataValidatorException(
             'preg_match failed on value "' . $data .'"',
-            DataProviderException::IS_WRONG
+            DataValidatorException::IS_INVALID
         );
     }
 
@@ -75,10 +75,7 @@ class DataValidator {
         if(filter_var($data, FILTER_VALIDATE_URL) !== false && preg_match('#^(http|https)#', $data)) {
             return $data;
         }
-        throw new DataProviderException(
-            '"' . $data .'" is no valid url',
-            DataProviderException::INVALID_URL
-        );
+        throw new DataValidatorException('"' . $data .'" is no valid url', DataValidatorException::INVALID_URL);
     }
 
     public function getTime(string $key, bool $mustSet = false) {
@@ -91,10 +88,7 @@ class DataValidator {
         $frc = explode(':', $data);
 
         if(intval($frc[0]) < 0 || intval($frc[0]) > 23 || intval($frc[1]) < 0 || intval($frc[1]) > 59) {
-            throw new DataProviderException(
-                '"' . $data .'" is not a valid time',
-                DataProviderException::INVALID_TIME
-            );
+            throw new DataValidatorException('"' . $data .'" is not a valid time', DataValidatorException::INVALID_TIME);
         }
 
         $rv = '';
@@ -109,11 +103,11 @@ class DataValidator {
         return $rv . $frc[1];
     }
 
-/*
- *     public function getDate(string $key, bool $mustSet = false, bool $mustFuture = false) : string {
+
+    public function getDate(string $key, bool $mustSet = false, bool $mustFuture = false) : string {
         $data = $this->getData($key, self::REGEX_DATE, $mustSet);
 
-        if($data == '' || $this->errpro->hasErrors($key)) {
+        if(!$mustSet && $data == '') {
             return $data;
         }
 
@@ -128,19 +122,19 @@ class DataValidator {
                 break;
 
             default:
-                $this->errpro->addError(ErrorProvider::INVALID_DATE, ['<NAME>' => $caption], $key);
+                throw new DataValidatorException('"' . $data . '" is not a valid date', DataValidatorException::INVALID_DATE);
         }
 
         if(!checkdate($frc[1], $frc[0], $frc[2])) {
-            $this->errpro->addError(ErrorProvider::INVALID_DATE, ['<NAME>' => $caption], $key);
+            throw new DataValidatorException('"' . $data . '" is not a valid date', DataValidatorException::INVALID_DATE);
         }
 
         $ts = mktime(date("H"), date("i"), date("s"), $frc[1], $frc[0], $frc[2]);
 
         if($mustFuture && $ts !== false && $ts < mktime()) {
-            $this->errpro->addError(ErrorProvider::DATE_IS_NOT_FUTRE, ['<NAME>' => $caption], $key);
+            throw new DataValidatorException('"' . $data . '" is not in future', DataValidatorException::DATE_IS_NOT_FUTRE);
         } else if($ts === false) {
-            $this->errpro->addError(ErrorProvider::DATE_OUT_OF_RANGE, ['<NAME>' => $caption], $key);
+            throw new DataValidatorException('"' . $data . '" is not a valid date', DataValidatorException::INVALID_DATE);
         }
 
         $rv = '';
@@ -163,8 +157,10 @@ class DataValidator {
         }
 
         if(!isset($vals[$data]) && !in_array($data, $vals)) {
-            $this->errpro->addError(ErrorProvider::IS_INVALID, ['<NAME>' => $caption], $key);
-            return array_shift($vals);
+            throw new DataValidatorException(
+                'key "' . $data . '" does not exist in array',
+                DataValidatorException::NOT_SET
+            );
         }
         return $data;
     }
@@ -207,7 +203,10 @@ class DataValidator {
     public function getText($key, $mustSet = false, $max = 0) {
         $rev = $this->getData($key, self::REGEX_ALL, $mustSet);
         if(mb_strlen($rev) > $max && $max > 0) {
-            $this->errpro->addError(ErrorProvider::IS_TO_LONG, $key);
+            throw new DataValidatorException(
+                'text is to long. Max ' . $max . ' chars allowed',
+                DataValidatorException::TO_LONG
+            );
         }
         return $rev;
     }
@@ -219,8 +218,4 @@ class DataValidator {
     public function getId($key = 'id') {
         return $this->getData($key, self::REGEX_ID, true);
     }
-
- *
- */
-
 }
