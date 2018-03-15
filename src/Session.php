@@ -27,6 +27,7 @@ class Session {
     #http://www.php.net/manual/de/function.setcookie.php#94398
 
     const GLOBAL_SECTION     = 'global';
+    const XSS_TOKEN          = 'xss_token';
 
     protected $path          = null;
     protected $serverName    = '';
@@ -103,23 +104,23 @@ class Session {
     }
 
     public function generateToken() : string {
-        $token = md5(microtime() . mt_rand());
-        $this->setGlobalEntry('xss_token', $token);
+        $token = md5(random_int(PHP_INT_MIN, PHP_INT_MAX) . uniqid("", true));
+        $this->setGlobalEntry(self::XSS_TOKEN, $token);
         return $token;
     }
 
     public function compareToken(string $rtoken) : bool {
-        $token = $this->getGlobalEntry('xss_token');
+        $token = $this->getGlobalEntry(self::XSS_TOKEN);
         if($token == null) {
             return false;
         }
-        $this->delGlobalEntry('xss_token');
+        $this->delGlobalEntry(self::XSS_TOKEN);
         return ($rtoken == $token);
     }
 
     public function getToken() : string {
-        $token = $this->getGlobalEntry('xss_token');
-        $this->delGlobalEntry('xss_token');
+        $token = $this->getGlobalEntry(self::XSS_TOKEN);
+        $this->delGlobalEntry(self::XSS_TOKEN);
         return $token;
     }
 
