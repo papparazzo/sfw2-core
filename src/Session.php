@@ -22,6 +22,8 @@
 
 namespace SFW2\Core;
 
+use SFW2\Core\Session\Exception as SessionException;
+
 class Session {
     #http://de3.php.net/manual/en/session.security.php#87608
     #http://www.php.net/manual/de/function.setcookie.php#94398
@@ -135,7 +137,7 @@ class Session {
         session_set_cookie_params(1800, '/', $domain, false, true);
         session_start();
     }
-    protected function isEntrySet(string $index, $section) : bool {
+    protected function isEntrySet(string $index, string $section) : bool {
         if(isset($_SESSION[$section][$index])) {
             return true;
         }
@@ -143,8 +145,8 @@ class Session {
     }
 
     protected function getEntry(string $index, string $section) {
-        if(!isset($_SESSION[$section][$index])) {
-            return null;
+        if(!$this->isEntrySet($index, $section)) {
+            throw new SessionException('Entry <' . $section . '/' . $index . '> not set', SessionException::NOT_SET);
         }
         return unserialize($_SESSION[$section][$index]);
     }
@@ -154,7 +156,7 @@ class Session {
     }
 
     protected function delEntry(string $index, string $section) : bool {
-        if(!isset($_SESSION[$section][$index])) {
+        if(!$this->isEntrySet($index, $section)) {
             return false;
         }
         unset($_SESSION[$section][$index]);
