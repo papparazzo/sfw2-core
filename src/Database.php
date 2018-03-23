@@ -27,17 +27,36 @@ use mysqli;
 
 class Database {
 
-    protected $db = null;
+    protected $handle = null;
+
+    protected $host;
+    protected $usr;
+    protected $pwd;
+    protected $db;
 
     public function __construct(string $host, string $usr, string $pwd, string $db) {
-        $this->db = new mysqli($host, $usr, $pwd, $db);
-        if(mysqli_connect_error()) {
+        $this->host = $host;
+        $this->usr  = $usr;
+        $this->pwd  = $pwd;
+        $this->db   = $db;
+        $this->connect($host, $usr, $pwd, $db);
+    }
+
+    public function connect(string $host, string $usr, string $pwd, string $db) {
+        $this->handle = new mysqli('p:' . $host, $usr, $pwd, $db);
+        $err = mysqli_connect_error();
+
+        if($err) {
             throw new DatabaseException(
-                "Could not connect to database",
+                "Could not connect to database <" . $err . ">",
                 DatabaseException::CON_FAILED
             );
         }
         $this->query("set names 'utf8';");
+    }
+
+    public function __wakeup() {
+        $this->connect($this->host, $this->usr, $this->pwd, $this->db);
     }
 
     public function delete(string $stmt, array $params = []) : int {
@@ -48,14 +67,14 @@ class Database {
         $params = $this->escape($params);
         $stmt = vsprintf($stmt, $params);
         $this->query($stmt);
-        return $this->db->affected_rows;
+        return $this->handle->affected_rows;
     }
 
     public function insert(string $stmt, array $params = []) : int {
         $params = $this->escape($params);
         $stmt = vsprintf($stmt, $params);
         $this->query($stmt);
-        return $this->db->insert_id;
+        return $this->handle->insert_id;
     }
 
     public function select(
@@ -169,7 +188,7 @@ class Database {
 
     public function escape($data) {
         if(!is_array($data)) {
-            return $this->db->escape_string($data);
+            return $this->handle->escape_string($data);
         }
         $rv = array();
         foreach($data as $v) {
@@ -198,10 +217,10 @@ class Database {
     }
 
     public function query(string $stmt) {
-        $res = $this->db->query($stmt);
+        $res = $this->handle->query($stmt);
         if($res === false) {
             throw new DatabaseException(
-                'query "' . $stmt . '" failed!' . PHP_EOL . PHP_EOL . $this->db->error,
+                'query "' . $stmt . '" failed!' . PHP_EOL . PHP_EOL . $this->handle->error,
                 DatabaseException::QUERY_FAILED
             );
         }
