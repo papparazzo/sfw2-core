@@ -45,8 +45,6 @@ class Session {
     }
 
     public function regenerateSession() {
-        $this->destroySession();
-        $this->startSession();
         session_regenerate_id(true);
     }
 
