@@ -66,19 +66,19 @@ class Session {
     }
 
     public function isPathEntrySet(string $index) {
-        return $this->isEntrySet($index, $this->path);
+        return $this->isEntrySet($this->path, $index);
     }
 
     public function getPathEntry(string $index) {
-        return $this->getEntry($index, $this->path);
+        return $this->getEntry($this->path, $index);
     }
 
     public function setPathEntry(string $index, $val) {
-        $this->setEntry($index, $this->path, $val);
+        $this->setEntry($this->path, $index, $val);
     }
 
     public function delPathEntry(string $index) {
-        return $this->delEntry($index, $this->path);
+        return $this->delEntry($this->path, $index);
     }
 
     public function delAllPathEntries() {
@@ -86,19 +86,19 @@ class Session {
     }
 
     public function isGlobalEntrySet(string $index) {
-        return $this->isEntrySet($index, self::GLOBAL_SECTION);
+        return $this->isEntrySet(self::GLOBAL_SECTION, $index);
     }
 
     public function getGlobalEntry(string $index) {
-        return $this->getEntry($index, self::GLOBAL_SECTION);
+        return $this->getEntry(self::GLOBAL_SECTION, $index);
     }
 
     public function setGlobalEntry(string $index, $val) {
-        $this->setEntry($index, self::GLOBAL_SECTION, $val);
+        $this->setEntry(self::GLOBAL_SECTION, $index, $val);
     }
 
     public function delGlobalEntry(string $index) {
-        return $this->delEntry($index, self::GLOBAL_SECTION);
+        return $this->delEntry(self::GLOBAL_SECTION, $index);
     }
 
     public function delAllGlobalEntries() {
@@ -137,26 +137,27 @@ class Session {
         session_set_cookie_params(1800, '/', $domain, false, true);
         session_start();
     }
-    protected function isEntrySet(string $index, string $section) : bool {
+
+    protected function isEntrySet(string $section, string $index) : bool {
         if(isset($_SESSION[$section][$index])) {
             return true;
         }
         return false;
     }
 
-    protected function getEntry(string $index, string $section) {
-        if(!$this->isEntrySet($index, $section)) {
+    protected function getEntry(string $section, string $index) {
+        if(!$this->isEntrySet($section, $index)) {
             throw new SessionException('Entry <' . $section . '/' . $index . '> not set', SessionException::NOT_SET);
         }
         return unserialize($_SESSION[$section][$index]);
     }
 
-    protected function setEntry(string $index, string $section, $val) {
+    protected function setEntry(string $section, string $index, $val) {
         $_SESSION[$section][$index] = serialize($val);
     }
 
-    protected function delEntry(string $index, string $section) : bool {
-        if(!$this->isEntrySet($index, $section)) {
+    protected function delEntry(string $section, string $index) : bool {
+        if(!$this->isEntrySet($section, $index)) {
             return false;
         }
         unset($_SESSION[$section][$index]);
