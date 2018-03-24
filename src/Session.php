@@ -67,8 +67,8 @@ class Session {
         return $this->isEntrySet($this->path, $index);
     }
 
-    public function getPathEntry(string $index) {
-        return $this->getEntry($this->path, $index);
+    public function getPathEntry(string $index, $default = null) {
+        return $this->getEntry($this->path, $index, $default);
     }
 
     public function setPathEntry(string $index, $val) {
@@ -87,8 +87,8 @@ class Session {
         return $this->isEntrySet(self::GLOBAL_SECTION, $index);
     }
 
-    public function getGlobalEntry(string $index) {
-        return $this->getEntry(self::GLOBAL_SECTION, $index);
+    public function getGlobalEntry(string $index, $default = null) {
+        return $this->getEntry(self::GLOBAL_SECTION, $index, $default);
     }
 
     public function setGlobalEntry(string $index, $val) {
@@ -143,9 +143,9 @@ class Session {
         return false;
     }
 
-    protected function getEntry(string $section, string $index) {
+    protected function getEntry(string $section, string $index, $default = null) {
         if(!$this->isEntrySet($section, $index)) {
-            throw new SessionException('Entry <' . $section . '/' . $index . '> not set', SessionException::NOT_SET);
+            return $default;
         }
         return unserialize($_SESSION[$section][$index]);
     }
