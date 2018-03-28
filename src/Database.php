@@ -27,6 +27,9 @@ use mysqli;
 
 class Database {
 
+    /**
+     * @var mysqli
+     */
     protected $handle = null;
 
     protected $host;
@@ -57,6 +60,10 @@ class Database {
 
     public function __wakeup() {
         $this->connect($this->host, $this->usr, $this->pwd, $this->db);
+    }
+
+    public function __sleep() {
+        $this->handle->close();
     }
 
     public function delete(string $stmt, array $params = []) : int {
