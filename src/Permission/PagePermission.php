@@ -120,4 +120,16 @@ class PagePermission {
         return (bool)($this->permission & self::DELETE_ALL);
     }
 
+    public function getPermissionArray() : array {
+        return [
+            'READ_OWN'   => $this->readOwnAllowed(),
+            'READ_ALL'   => $this->readAllAllowed(),
+            'CREATE'     => $this->createAllowed(),
+            'UPDATE_OWN' => $this->updateOwnAllowed(),
+            'UPDATE_ALL' => $this->updateAllAllowed(),
+            'DELETE_OWN' => $this->deleteOwnAllowed(),
+            'DELETE_ALL' => $this->deleteAllAllowed()
+        ];
+    }
+
 }
