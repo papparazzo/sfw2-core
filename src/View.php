@@ -105,10 +105,4 @@ class View {
         include($this->template);
     }
 
-    protected function showNoData() {
-        return # FIXME Create Template
-        '<div style="margin-top: 1.2em;" class="alert alert-dark" role="alert">
-            <strong>Anmerkung:</strong> Es gibt keine Daten
-        </div>';
-    }
 }
