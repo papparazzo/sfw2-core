@@ -40,11 +40,26 @@ class DataValidator {
     const REGEX_PHONE       = '#^\(?(\+|00|0)?[1-9]?[0-9 ]{1,9}(/|\))?[0-9 \-]+$#';
     const REGEX_EMAIL_ADDR  = '#^[a-zA-Z0-9._%\+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$#';
 
-    public function __construct(Array $data) {
+
+    const IS_EMPTY    = 1;
+    const IS_MISS     = 2;
+    const IS_INVALID  = 3;
+    #const IS_NOT_STRONG_ENO = 4; #'<NAME> ist nicht sicher genug.';
+    #const IS_EQUAL    = 5;# '<NAME> darf nicht mit <NAME2> übereinstimmen.';
+    const INVALID_URL     = 6;
+    const INVALID_TIME    = 7;
+    const INVALID_DATE    = 8;
+    const TO_LONG         = 9;
+    const NOT_SET         = 10;
+    const DATE_IS_NOT_FUTRE = 11;
+
+
+
+    public function __construct(array $data) {
         $this->data = $data;
     }
 
-    public function getData(string $key, string $regEx = '', bool $mustSet = false) {
+    public function getData(string $key, string $regEx = '', bool $mustSet = false) : string {
         $data = '';
         if(isset($this->data[$key])) {
             $data = $this->data[$key];
