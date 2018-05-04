@@ -118,7 +118,7 @@ class Image {
         }
     }
 
-    public function getImage($file) : Array {
+    public function getImage($file) : array {
         return [
             'thumb'   => DIRECTORY_SEPARATOR . $this->path . self::DIR_THUMB_RES . $file,
             'regular' => DIRECTORY_SEPARATOR . $this->path . self::DIR_REGULAR_RES . $file,
