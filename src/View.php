@@ -29,13 +29,13 @@ use DateTimeZone;
 
 class View {
 
-    protected $vars       = [];
-    protected $templateId = 0;
-    protected $template   = null;
+    protected $vars = [];
+    protected $template;
+    protected $path;
 
-    public function __construct(string $template = null, int $templateId = 0) {
-        $this->templateId = $templateId;
-        $this->template   = $template;
+    public function __construct(string $template = null, $path = '/') {
+        $this->template = $template;
+        $this->path     = $path;
     }
 
     public function assign(string $name, $val) {
@@ -78,8 +78,8 @@ class View {
         );
     }
 
-    public function getTemplateId() : int {
-        return $this->templateId;
+    public function getCurrentPath() : string {
+        return $this->path;
     }
 
     public function getContent() {
