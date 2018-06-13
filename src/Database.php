@@ -117,7 +117,7 @@ class Database {
     }
 
     public function selectKeyValue(
-        string $key, string $value, string $table, string $where = "", array $params = []
+        string $key, string $value, string $table, string $condition = "", array $params = []
     ) : array {
         $key = $this->escape($key);
         $value = $this->escape($value);
@@ -126,11 +126,8 @@ class Database {
 
         $stmt =
             "SELECT `" . $key . "` AS `k`, `" . $value . "` AS `v` " .
-            "FROM `" . $table . "` ";
-
-        if($where != "") {
-            $stmt .= "WHERE " . $where;
-        }
+            "FROM `" . $table . "` " .
+            $condition;
 
         $stmt  = vsprintf($stmt, $params);
         $res = $this->query($stmt);
@@ -143,7 +140,7 @@ class Database {
     }
 
     public function selectKeyValues(
-        string $key, array $values, string $table, string $where = "", array $params = []
+        string $key, array $values, string $table, string $condition = "", array $params = []
     ) : array {
         $key = $this->escape($key);
         $table = $this->escape($table);
@@ -153,11 +150,8 @@ class Database {
         $stmt =
             "SELECT `" . $key . "` AS `k`, `" .
             implode("`, `", $values) . "` " .
-            "FROM `" . $table . "` ";
-
-        if($where != "") {
-            $stmt .= "WHERE " . $where;
-        }
+            "FROM `" . $table . "` " .
+            $condition;
 
         $stmt  = vsprintf($stmt, $params);
         $res = $this->query($stmt);
@@ -171,16 +165,12 @@ class Database {
         return $rv;
     }
 
-    public function selectCount(
-        string $table, array $where = [], array $params = [], string $join = 'AND'
-    ) {
+    public function selectCount(string $table, string $condition = "", array $params = []) {
         $stmt =
             "SELECT COUNT(*) AS `cnt` " .
-            "FROM `" . $table . "` ";
+            "FROM `" . $table . "` " .
+            $condition;
 
-        if(\count($where) > 0) {
-            $stmt .= "WHERE " . \implode(' ' . $join . ' ', $where);
-        }
         return $this->selectSingle($stmt, $params);
     }
 
