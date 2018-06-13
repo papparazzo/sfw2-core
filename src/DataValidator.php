@@ -3,7 +3,7 @@
 /**
  *  SFW2 - SimpleFrameWork
  *
- *  Copyright (C) 2017  Stefan Paproth
+ *  Copyright (C) 2018  Stefan Paproth
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as
@@ -23,15 +23,139 @@
 namespace SFW2\Core;
 
 use SFW2\Core\DataValidator\Exception as DataValidatorException;
+use BadMethodCallException;
 
 class DataValidator {
-    protected $data = [];
+
+    protected $rulesets = [];
+
+    protected $errorProvider = null;
+
+    public function __construct(array $ruleset) {
+        $this->errorProvider = new ErrorProvider();
+        $this->rulesets = $ruleset;
+    }
+
+    public function validate(array $input, array &$output) : bool {
+
+        $hasErrors = false;
+        $output = [];
+
+        foreach($this->rulesets as $field => $ruleset) {
+
+            if(!isset($input[$field])) {
+                $input[$field] = '';
+            }
+
+            try {
+                $output[$field]['hint'] = '';
+                $output[$field]['value'] = $input[$field];
+                $this->validateItem($ruleset, $input[$field]);
+            } catch (DataValidatorException $ex) {
+                $output[$field]['hint'] = $ex->getMessage();
+                $hasErrors = true;
+            }
+        }
+        return !$hasErrors;
+    }
+
+    protected function validateItem(array $ruleset, string $value) {
+        foreach($ruleset as $rule) {
+            $tokens = explode(':', $rule);
+            $method = $tokens[0];
+            $params = $tokens[1] ?? '';
+            $this->validateCheckMethod($method);
+            $this->$method($value, explode(',', $params));
+        }
+    }
+
+    protected function validateCheckMethod($method) {
+        if(!substr($method, 0, strlen('is')) == 'is') {
+            throw new BadMethodCallException('"' . $method .'" does not start with "is"');
+        }
+
+        if(!is_callable([$this, $method])) {
+            throw new BadMethodCallException('"' . $method .'" is not a callable methode');
+        }
+    }
+
+    protected function isNotEmpty(string $value, array $params) {
+        if($value == '') {
+            throw new DataValidatorException(
+                $this->errorProvider->getErrorMessage(ErrorProvider::IS_EMPTY)
+            );
+        }
+    }
+
+    protected function isNumeric(string $value, array $params) {
+        if(!preg_match('#^[0-9\-]+$#', $value)) {
+            throw new DataValidatorException(
+                $this->errorProvider->getErrorMessage(ErrorProvider::NUM_ONLY)
+            );
+        }
+    }
+
+    protected function isOneOf(string $value, array $params) {
+        if(!in_array($value, $params)) {
+            throw new DataValidatorException(
+                $this->errorProvider->getErrorMessage(ErrorProvider::INVALID_VALUE)
+            );
+        }
+    }
+
+    protected function isAlphaNumeric(string $value, string &$hint, array $params) : bool {
+
+    }
+
+
+
+
+
+
+
+
+        #['required', 'checkAlphaNumeric', 'checkRange:0,100', 'checkMinLen:6']
+        #checkEmail
+        #checkMaxLen
+        #checkLen
+        #checkIsOneOf
+
+
+
+
+    #protected function
+
+
+
+
+
+
+
+
+
+
+
+    const REQUIRED    = 'REQUIRED';
+    const MAX_LEN     = 'MAX_LEN';
+    const MIN_LEN     = 'MIN_LEN';
+    const EXACT_LEN   = 'EXACT_LEN';
+    const MATCH_REGEX = 'MATCH_REGEX';
+    const IS_IN_LIST  = 'IS_IN_LIST'; // Liste mit Elementen
+
+    const VALID_URL   = 'VALID_URL';
+
+
+
+
+
+
+
+
 
     const REGEX_TEXT_SIMPLE = '#^[A-Za-zäÄöÖüÜß0-9]+$#';
     const REGEX_FILE_NAME   = '#^[A-Za-zäÄöÖüÜß0-9._]+$#';
     const REGEX_NAME        = '#^[A-Za-zäÄöÖüÜß0-9._\- ]+$#';
     const REGEX_ID          = '#^[A-Za-z0-9\-_]+$#';
-    const REGEX_ALL         = '#^.*$#m';
     const REGEX_STRICT      = '#^[A-Za-z0-9]+$#';
     const REGEX_HASH        = '#^[A-Fa-f0-9]+$#';
     const REGEX_NUMERIC     = '#^[0-9\-]+$#';
@@ -41,47 +165,25 @@ class DataValidator {
     const REGEX_EMAIL_ADDR  = '#^[a-zA-Z0-9._%\+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$#';
 
 
-    const IS_EMPTY    = 1;
-    const IS_MISS     = 2;
-    const IS_INVALID  = 3;
-    #const IS_NOT_STRONG_ENO = 4; #'<NAME> ist nicht sicher genug.';
-    #const IS_EQUAL    = 5;# '<NAME> darf nicht mit <NAME2> übereinstimmen.';
-    const INVALID_URL     = 6;
-    const INVALID_TIME    = 7;
-    const INVALID_DATE    = 8;
-    const TO_LONG         = 9;
-    const NOT_SET         = 10;
-    const DATE_IS_NOT_FUTRE = 11;
-
-
-
-    public function __construct(array $data) {
-        $this->data = $data;
-    }
-
-    public function getData(string $key, string $regEx = '', bool $mustSet = false) : string {
+    public function getData(string $key, string $regEx = '', bool $mustSet = false) {
         $data = '';
         if(isset($this->data[$key])) {
             $data = $this->data[$key];
         }
-
         if(!$mustSet && $data == '') {
-            return $data;
+            return $this->getReturn();
         }
         if($data == '') {
-            throw new DataValidatorException('data not set', DataValidatorException::IS_EMPTY);
+            return $this->getReturn('', self::IS_EMPTY);
         }
         if($regEx == '') {
-            return $data;
+            return $this->getReturn($data);
         }
 
         if(preg_match($regEx, $data)) {
-            return $data;
+            return $this->getReturn($data);
         }
-        throw new DataValidatorException(
-            'preg_match failed on value "' . $data .'"',
-            DataValidatorException::IS_INVALID
-        );
+        return $this->getReturn($data, self::IS_INVALID);
     }
 
     public function getHref(string $key, bool $mustSet = false) {
