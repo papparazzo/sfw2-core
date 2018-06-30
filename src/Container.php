@@ -26,9 +26,9 @@ use ArrayAccess;
 use SFW2\Core\Container\Exception as ContainerException;
 
 class Container implements ArrayAccess {
-    protected $data = array();
+    protected $data = [];
 
-    public function __construct(Array $data = array()) {
+    public function __construct(array $data = []) {
         $this->insert($data);
     }
 
