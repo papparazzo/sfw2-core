@@ -42,7 +42,6 @@ class DataValidator {
         $output = [];
 
         foreach($this->rulesets as $field => $ruleset) {
-
             if(!isset($input[$field])) {
                 $input[$field] = '';
             }
@@ -81,26 +80,60 @@ class DataValidator {
 
     protected function isNotEmpty(string $value, array $params) {
         if($value == '') {
-            throw new DataValidatorException(
-                $this->errorProvider->getErrorMessage(ErrorProvider::IS_EMPTY)
-            );
+            throw new DataValidatorException($this->errorProvider->getErrorMessage(ErrorProvider::IS_EMPTY));
         }
     }
 
     protected function isNumeric(string $value, array $params) {
         if(!preg_match('#^[0-9\-]+$#', $value)) {
-            throw new DataValidatorException(
-                $this->errorProvider->getErrorMessage(ErrorProvider::NUM_ONLY)
-            );
+            throw new DataValidatorException($this->errorProvider->getErrorMessage(ErrorProvider::NUM_ONLY));
         }
     }
 
     protected function isOneOf(string $value, array $params) {
         if(!in_array($value, $params)) {
-            throw new DataValidatorException(
-                $this->errorProvider->getErrorMessage(ErrorProvider::INVALID_VALUE)
-            );
+            throw new DataValidatorException($this->errorProvider->getErrorMessage(ErrorProvider::INVALID_VALUE));
         }
+    }
+
+    protected function isDate(string $value, array $params) {
+        return;
+        if(!preg_match('#^[0-3]?[0-9]\.[0-1]?[0-9]\.(19|20)?[0-9][0-9]$#', $value)) {
+            throw new DataValidatorException($this->errorProvider->getErrorMessage(ErrorProvider::INV_DATE));
+        }
+
+        $frc = explode('.', $value);
+
+        switch(mb_strlen($frc[2])) {
+            case 4:
+                break;
+
+            case 2:
+                $frc[2] = '20' . $frc[2];
+                break;
+
+            default:
+                throw new DataValidatorException($this->errorProvider->getErrorMessage(ErrorProvider::RAN_DATE));
+        }
+
+        if(!checkdate($frc[1], $frc[0], $frc[2])) {
+            throw new DataValidatorException($this->errorProvider->getErrorMessage(ErrorProvider::INV_DATE));
+        }
+
+        $ts = mktime(date("H"), date("i"), date("s"), $frc[1], $frc[0], $frc[2]);
+
+        if($ts === false) {
+            throw new DataValidatorException($this->errorProvider->getErrorMessage(ErrorProvider::INV_DATE));
+        }
+
+        if($params['futureOnly'] && $ts < mktime()) {
+            throw new DataValidatorException($this->errorProvider->getErrorMessage(ErrorProvider::FUT_DATE));
+        }
+
+        if($params['pastOnly'] && $ts > mktime()) {
+            throw new DataValidatorException($this->errorProvider->getErrorMessage(ErrorProvider::PAS_DATE));
+        }
+
     }
 
     protected function isAlphaNumeric(string $value, string &$hint, array $params) : bool {
@@ -160,7 +193,6 @@ class DataValidator {
     const REGEX_HASH        = '#^[A-Fa-f0-9]+$#';
     const REGEX_NUMERIC     = '#^[0-9\-]+$#';
     const REGEX_TIME        = '#^[0-2]?[0-9]:[0-5]?[0-9]$#';
-    const REGEX_DATE        = '#^[0-3]?[0-9]\.[0-1]?[0-9]\.(19|20)?[0-9][0-9]$#';
     const REGEX_PHONE       = '#^\(?(\+|00|0)?[1-9]?[0-9 ]{1,9}(/|\))?[0-9 \-]+$#';
     const REGEX_EMAIL_ADDR  = '#^[a-zA-Z0-9._%\+\-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$#';
 
@@ -218,52 +250,6 @@ class DataValidator {
             $rv .= '0';
         }
         return $rv . $frc[1];
-    }
-
-
-    public function getDate(string $key, bool $mustSet = false, bool $mustFuture = false) : string {
-        $data = $this->getData($key, self::REGEX_DATE, $mustSet);
-
-        if(!$mustSet && $data == '') {
-            return $data;
-        }
-
-        $frc = explode('.', $data);
-
-        switch(mb_strlen($frc[2])) {
-            case 4:
-                break;
-
-            case 2:
-                $frc[2] = '20' . $frc[2];
-                break;
-
-            default:
-                throw new DataValidatorException('"' . $data . '" is not a valid date', DataValidatorException::INVALID_DATE);
-        }
-
-        if(!checkdate($frc[1], $frc[0], $frc[2])) {
-            throw new DataValidatorException('"' . $data . '" is not a valid date', DataValidatorException::INVALID_DATE);
-        }
-
-        $ts = mktime(date("H"), date("i"), date("s"), $frc[1], $frc[0], $frc[2]);
-
-        if($mustFuture && $ts !== false && $ts < mktime()) {
-            throw new DataValidatorException('"' . $data . '" is not in future', DataValidatorException::DATE_IS_NOT_FUTRE);
-        } else if($ts === false) {
-            throw new DataValidatorException('"' . $data . '" is not a valid date', DataValidatorException::INVALID_DATE);
-        }
-
-        $rv = '';
-        if(mb_strlen($frc[0]) == 1) {
-            $rv = '0';
-        }
-        $rv .= $frc[0] . '.';
-
-        if(mb_strlen($frc[1]) == 1) {
-            $rv .= '0';
-        }
-        return $rv . $frc[1] . '.' . $frc[2];
     }
 
     public function getArrayValue($key, $mustSet = false, array $vals = []) {
