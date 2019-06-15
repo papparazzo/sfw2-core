@@ -56,9 +56,7 @@ class Session {
 
     public function destroySession() {
         $domain = filter_var($this->serverName, FILTER_SANITIZE_URL);
-        setcookie(
-            session_name(), '', time() - 42000, '/', $domain, true, true
-        );
+        setcookie(session_name(), '', time() - 42000, '/', $domain, true, true);
         session_destroy();
         $_SESSION = array();
     }

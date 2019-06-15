@@ -22,54 +22,7 @@
 
 namespace SFW2\Core;
 
-use SFW2\Core\Helper\Exception as HelperException;
-
 class Helper {
-
-    public function createFolder($path, $folderName, $i = 0) {
-        if($folderName == '') {
-            $folderName = md5(mt_rand());
-        } else if($i == 0) {
-            $folderName = self::getSimplifiedName($folderName);
-        }
-
-        if($i > 0) {
-            $app = '_' . $i;
-        }
-
-        $tmp = $path . DIRECTORY_SEPARATOR . $folderName . $app;
-
-        if(is_file($tmp) || is_dir($tmp)) {
-            return self::createFolder($path, $folderName, ++$i);
-        }
-        if(mkdir($tmp)) {
-            return $folderName . $app;
-        }
-        throw new HelperException(
-            'could not create Path "' . $tmp . '"',
-            HelperException::COULD_NOT_CREATE_PATH
-        );
-    }
-
-    public static function getSimplifiedName($name) {
-        $name = trim($name);
-        $name = str_replace(' ', '_', $name);
-        $name = iconv("UTF-8", "ASCII//TRANSLIT", $name); // converts umlauts see http://www.interessante-zeiten.de/webdesign/ae-zu-ae-umlaute-mit-php-umwandeln-312.html for details
-        $name = preg_replace('/[^A-Za-z0-9_]/', '', $name);
-        return mb_strtolower($name);
-    }
-
-    public static function getImageFileName($path, $firstname, $lastname) {
-        $file =
-            self::getSimplifiedName($firstname) . '_' .
-            self::getSimplifiedName($lastname) . '.png';
-
-        $path = trim($path, DIRECTORY_SEPARATOR);
-        if(file_exists($path . DIRECTORY_SEPARATOR . $file)) {
-            return $file;
-        }
-        return 'unknown.png';
-    }
 
     public static function getRandomInt() {
         list($usec, $sec) = explode(' ', microtime());
@@ -87,7 +40,7 @@ class Helper {
             if($j < 27) {
                 $pwd .= mb_substr($chars, $j, 1);
             } else if($j < 53) {
-                $pwd .= mb_strtolower(\mb_substr($chars, $j - 27, 1));
+                $pwd .= mb_strtolower(mb_substr($chars, $j - 27, 1));
             } else {
                 $pwd .= mb_substr($other, $j - 53, 1);
             }

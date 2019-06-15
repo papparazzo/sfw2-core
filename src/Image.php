@@ -145,9 +145,7 @@ class Image {
             case IMAGETYPE_JPEG:
                 $old = imagecreatefromjpeg($src . DIRECTORY_SEPARATOR . $file);
                 $new = imagecreatetruecolor($desWidth, $desHeight);
-                imagecopyresampled(
-                    $new, $old, 0, 0, 0, 0, $desWidth, $desHeight, $srcWidth, $srcHeight
-                );
+                imagecopyresampled($new, $old, 0, 0, 0, 0, $desWidth, $desHeight, $srcWidth, $srcHeight);
                 imagejpeg($new, $des . DIRECTORY_SEPARATOR . $file, 100);
                 imagedestroy($old);
                 imagedestroy($new);
@@ -156,9 +154,7 @@ class Image {
             case IMAGETYPE_PNG:
                 $old = imagecreatefrompng($src . DIRECTORY_SEPARATOR . $file);
                 $new = imagecreatetruecolor($desWidth, $desHeight);
-                imagecopyresampled(
-                    $new, $old, 0, 0, 0, 0, $desWidth, $desHeight, $srcWidth, $srcHeight
-                );
+                imagecopyresampled($new, $old, 0, 0, 0, 0, $desWidth, $desHeight, $srcWidth, $srcHeight);
                 imagepng($new, $des . DIRECTORY_SEPARATOR . $file);
                 imagedestroy($old);
                 imagedestroy($new);
