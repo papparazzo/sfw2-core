@@ -37,11 +37,14 @@ class Database {
     protected $pwd;
     protected $db;
 
-    public function __construct(string $host, string $usr, string $pwd, string $db) {
-        $this->host = $host;
-        $this->usr  = $usr;
-        $this->pwd  = $pwd;
-        $this->db   = $db;
+    protected $prefix = '';
+
+    public function __construct(string $host, string $usr, string $pwd, string $db, string $tablePrefix = 'sfw2') {
+        $this->host   = $host;
+        $this->usr    = $usr;
+        $this->pwd    = $pwd;
+        $this->db     = $db;
+        $this->prefix = $tablePrefix;
         $this->connect($host, $usr, $pwd, $db);
     }
 
@@ -50,19 +53,16 @@ class Database {
         $err = mysqli_connect_error();
 
         if($err) {
-            throw new DatabaseException(
-                "Could not connect to database <" . $err . ">",
-                DatabaseException::CON_FAILED
-            );
+            throw new DatabaseException("Could not connect to database <$err>", DatabaseException::CON_FAILED);
         }
         $this->query("set names 'utf8';");
     }
 
-    public function __wakeup() {
+    public function __wakeup() : void {
         $this->connect($this->host, $this->usr, $this->pwd, $this->db);
     }
 
-    public function __sleep() {
+    public function __sleep() : void {
         $this->handle->close();
     }
 
@@ -84,9 +84,7 @@ class Database {
         return $this->handle->insert_id;
     }
 
-    public function select(
-        string $stmt, Array $params = [], int $offset = -1, int $count = -1
-    ) : array {
+    public function select(string $stmt, Array $params = [], int $offset = -1, int $count = -1) : array {
         $params = $this->escape($params);
         $stmt  = vsprintf($stmt, $params);
         $stmt .= $this->addLimit($offset, $count);
@@ -116,9 +114,7 @@ class Database {
         return array_shift($res);
     }
 
-    public function selectKeyValue(
-        string $key, string $value, string $table, string $condition = "", array $params = []
-    ) : array {
+    public function selectKeyValue(string $key, string $value, string $table, string $condition = "", array $params = []) : array {
         $key = $this->escape($key);
         $value = $this->escape($value);
         $table = $this->escape($table);
@@ -139,9 +135,7 @@ class Database {
         return $rv;
     }
 
-    public function selectKeyValues(
-        string $key, array $values, string $table, string $condition = "", array $params = []
-    ) : array {
+    public function selectKeyValues(string $key, array $values, string $table, string $condition = "", array $params = []) : array {
         $key = $this->escape($key);
         $table = $this->escape($table);
         $values = $this->escape($values);
@@ -214,6 +208,8 @@ class Database {
     }
 
     public function query(string $stmt) {
+        $stmt = str_replace('{TABLE_PREFIX}', $this->prefix, $stmt);
+
         $res = $this->handle->query($stmt);
         if($res === false) {
             throw new DatabaseException(
