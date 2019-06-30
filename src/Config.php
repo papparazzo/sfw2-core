@@ -41,10 +41,7 @@ class Config {
 
     protected function checkConfigFile(string $configFile) {
         if(!is_readable($configFile)) {
-            throw new ConfigException(
-                'config-file <' . $configFile . '> is not readable',
-                ConfigException::FILE_NOT_FOUND
-            );
+            throw new ConfigException("config-file <$configFile> is not readable", ConfigException::FILE_NOT_FOUND);
         }
     }
 

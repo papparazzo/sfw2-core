@@ -22,8 +22,6 @@
 
 namespace SFW2\Core;
 
-use SFW2\Core\Session\Exception as SessionException;
-
 class Session {
     #http://de3.php.net/manual/en/session.security.php#87608
     #http://www.php.net/manual/de/function.setcookie.php#94398
