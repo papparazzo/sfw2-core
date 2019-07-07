@@ -72,10 +72,7 @@ class View {
         if(isset($this->vars[$name])) {
             return $this->vars[$name];
         }
-        throw new ViewException(
-            'template-var "' . $name . '" not set',
-            ViewException::VARIABLE_MISSING
-        );
+        throw new ViewException("template-var <$name> not set", ViewException::VARIABLE_MISSING);
     }
 
     public function getCurrentPath() : string {
@@ -90,19 +87,26 @@ class View {
 
     protected function showContent() {
         if(!file_exists($this->template) || !is_readable($this->template)) {
-            throw new ViewException(
-               'Could not find template "' . $this->template . '"',
-                ViewException::TEMPLATE_MISSING
-            );
+            throw new ViewException("Could not find template <{$this->template}>", ViewException::TEMPLATE_MISSING);
         }
 
         if(!isset($this->vars['modificationDate']) || $this->vars['modificationDate'] == '') {
-            $this->vars['modificationDate'] = strftime('%a., %d. %b. %G', (new DateTime(
-                '@' . filemtime($this->template),
-                new DateTimeZone('Europe/Berlin') // TODO: remove dependency
-            ))->getTimestamp()); #Mi., 11. Mai. 2016
+            $this->vars['modificationDate'] = new DateTime('@' . filemtime($this->template), new DateTimeZone('Europe/Berlin'));
         }
+
+        if(is_string($this->vars['modificationDate'])) {
+            $this->vars['modificationDate'] = new DateTime($this->vars['modificationDate'], new DateTimeZone('Europe/Berlin'));
+        }
+
+        #Mi., 11. Mai. 2016
+        $this->vars['modificationDate'] = strftime('%a., %d. %b. %G', $this->vars['modificationDate']->getTimestamp());
+
         include($this->template);
+    }
+
+    protected function getTimeStampOfTemplate() {
+        // TODO: remove dependency
+        return (new DateTime('@' . filemtime($this->template), new DateTimeZone('Europe/Berlin')))->getTimestamp();
     }
 
 }
