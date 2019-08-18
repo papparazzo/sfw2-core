@@ -24,18 +24,13 @@ namespace SFW2\Core;
 
 use SFW2\Core\View\Exception as ViewException;
 
-use DateTime;
-use DateTimeZone;
-
 class View {
 
     protected $vars = [];
     protected $template;
-    protected $path;
 
-    public function __construct(string $template = null, $path = '/') {
+    public function __construct(string $template = null) {
         $this->template = $template;
-        $this->path     = $path;
     }
 
     public function assign(string $name, $val) {
@@ -75,10 +70,6 @@ class View {
         throw new ViewException("template-var <$name> not set", ViewException::VARIABLE_MISSING);
     }
 
-    public function getCurrentPath() : string {
-        return $this->path;
-    }
-
     public function getContent() {
         ob_start();
         $this->showContent();
@@ -90,23 +81,7 @@ class View {
             throw new ViewException("Could not find template <{$this->template}>", ViewException::TEMPLATE_MISSING);
         }
 
-        if(!isset($this->vars['modificationDate']) || $this->vars['modificationDate'] == '') {
-            $this->vars['modificationDate'] = new DateTime('@' . filemtime($this->template), new DateTimeZone('Europe/Berlin'));
-        }
-
-        if(is_string($this->vars['modificationDate'])) {
-            $this->vars['modificationDate'] = new DateTime($this->vars['modificationDate'], new DateTimeZone('Europe/Berlin'));
-        }
-
-        #Mi., 11. Mai. 2016
-        $this->vars['modificationDate'] = strftime('%a., %d. %b. %G', $this->vars['modificationDate']->getTimestamp());
-
         include($this->template);
-    }
-
-    protected function getTimeStampOfTemplate() {
-        // TODO: remove dependency
-        return (new DateTime('@' . filemtime($this->template), new DateTimeZone('Europe/Berlin')))->getTimestamp();
     }
 
 }
