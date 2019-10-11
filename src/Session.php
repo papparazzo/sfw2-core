@@ -43,7 +43,7 @@ class Session {
     }
 
     public function regenerateSession() {
-        session_regenerate_id(true);
+        session_regenerate_id();
     }
 
     public function setPath(string $path) {
