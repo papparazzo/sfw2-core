@@ -104,7 +104,7 @@ class Image {
         return $filename;
     }
 
-    protected function createDirs() {
+    protected function createDirs() : void {
         if(
             !mkdir($this->path, 0777, true) &&
             !mkdir($this->path . self::DIR_THUMB_RES) &&
@@ -118,7 +118,7 @@ class Image {
         }
     }
 
-    public function getImage($file) : array {
+    public function getImage(string $file) : array {
         return [
             'thumb'   => DIRECTORY_SEPARATOR . $this->path . self::DIR_THUMB_RES . $file,
             'regular' => DIRECTORY_SEPARATOR . $this->path . self::DIR_REGULAR_RES . $file,

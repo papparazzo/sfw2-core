@@ -42,7 +42,7 @@ class Session {
         session_write_close();
     }
 
-    public function regenerateSession() {
+    public function regenerateSession() : void {
         session_regenerate_id();
     }
 
@@ -52,7 +52,7 @@ class Session {
         }
     }
 
-    public function destroySession() {
+    public function destroySession() : void {
         $domain = filter_var($this->serverName, FILTER_SANITIZE_URL);
         setcookie(session_name(), '', time() - 42000, '/', $domain, true, true);
         session_destroy();

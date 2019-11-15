@@ -52,7 +52,7 @@ class Config {
         return $this->conf[$section][$key];
     }
 
-    public function getSection(string $section) : Array {
+    public function getSection(string $section) : array {
         if(!isset($this->conf[$section])) {
             return [];
         }

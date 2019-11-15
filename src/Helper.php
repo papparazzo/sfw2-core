@@ -24,14 +24,14 @@ namespace SFW2\Core;
 
 class Helper {
 
-    public static function getRandomInt() {
+    public static function getRandomInt() : int {
         list($usec, $sec) = explode(' ', microtime());
         $seed = (float) $sec + ((float) $usec * 100000);
         mt_srand($seed);
         return mt_rand();
     }
 
-    public static function generatePassword($length = 10) {
+    public static function generatePassword(int $length = 10) : string {
         $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $other = '1234567890!+$%&/()=,.-;:_#';
         $pwd   = '';

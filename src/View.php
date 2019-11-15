@@ -33,23 +33,23 @@ class View {
         $this->template = $template;
     }
 
-    public function assign(string $name, $val) {
+    public function assign(string $name, $val) : void {
         $this->vars[$name] = $val;
     }
 
-    public function assignArray(array $values) {
+    public function assignArray(array $values) : void {
         $this->vars = array_merge($this->vars, $values);
     }
 
-    public function append(string $name, $val) {
+    public function append(string $name, $val) : void {
         if(!isset($this->vars[$name])) {
             $this->vars[$name] = [];
         }
         $this->vars[$name][] = $val;
     }
 
-    public function appendArray(string $name, array $values) {
-     if(!isset($this->vars[$name])) {
+    public function appendArray(string $name, array $values) : void {
+        if(!isset($this->vars[$name])) {
             $this->vars[$name] = [];
         }
         $this->vars[$name] = array_merge($this->vars[$name], $values);
@@ -70,13 +70,13 @@ class View {
         throw new ViewException("template-var <$name> not set", ViewException::VARIABLE_MISSING);
     }
 
-    public function getContent() {
+    public function getContent() : string {
         ob_start();
         $this->showContent();
         return ob_get_clean();
     }
 
-    protected function showContent() {
+    protected function showContent() : void {
         if(!file_exists($this->template) || !is_readable($this->template)) {
             throw new ViewException("Could not find template <{$this->template}>", ViewException::TEMPLATE_MISSING);
         }

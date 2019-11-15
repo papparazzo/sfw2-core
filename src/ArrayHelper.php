@@ -69,10 +69,12 @@ class ArrayHelper implements ArrayAccess, Iterator, Countable {
     }
 
 	public function offsetSet($offset, $value) {
+        unset($offset, $value);
         // -#- NOOP
     }
 
 	public function offsetUnset($offset) {
+        unset($offset);
         // -#- NOOP
     }
 
