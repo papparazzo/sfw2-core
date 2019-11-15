@@ -2,9 +2,9 @@
     "name": "sfw2/core",
     "type": "library",
     "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3",
-    "description": "Simple framework",
+
     "require": {
-        "php": "^7.2"
+        "php": "^7.3"
     },
     "autoload": {
         "psr-4": {
