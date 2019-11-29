@@ -29,11 +29,10 @@ class Session {
     const GLOBAL_SECTION         = 'global';
     const XSS_TOKEN              = 'xss_token';
 
-    protected string $path       = null;
+    protected string $path       = self::GLOBAL_SECTION;
     protected string $serverName = '';
 
     public function __construct(string $serverName) {
-        $this->path = self::GLOBAL_SECTION;
         $this->serverName = $serverName;
         $this->startSession();
     }

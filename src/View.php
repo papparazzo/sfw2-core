@@ -29,7 +29,7 @@ class View {
     protected array $vars = [];
     protected string $template;
 
-    public function __construct(string $template = null) {
+    public function __construct(string $template = '') {
         $this->template = $template;
     }
 
