@@ -33,7 +33,7 @@ class PagePermission {
     const DELETE_OWN    = 32;
     const DELETE_ALL    = 64;
 
-    protected $permission = self::NO_PERMISSION;
+    protected int $permission = self::NO_PERMISSION;
 
     public function __construct(array $permissions = []) {
         $this->setPermissions($permissions);
@@ -46,7 +46,7 @@ class PagePermission {
         return $this;
     }
 
-    public function setPermissions($permissions) : PagePermission {
+    public function setPermissions(array $permissions) : PagePermission {
         $this->permission = self::NO_PERMISSION;
 
         foreach($permissions as $permission) {

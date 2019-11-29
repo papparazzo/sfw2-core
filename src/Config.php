@@ -26,8 +26,8 @@ use SFW2\Core\Config\Exception as ConfigException;
 
 class Config {
 
-    protected $conf = [];
-    protected $objects = [];
+    protected array $conf = [];
+    protected array $objects = [];
 
     public function __construct(string $configFile, string $defaultFile) {
         $this->checkConfigFile($configFile);
@@ -39,7 +39,7 @@ class Config {
         );
     }
 
-    protected function checkConfigFile(string $configFile) {
+    protected function checkConfigFile(string $configFile) : void {
         if(!is_readable($configFile)) {
             throw new ConfigException("config-file <$configFile> is not readable", ConfigException::FILE_NOT_FOUND);
         }

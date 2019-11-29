@@ -26,8 +26,8 @@ interface PermissionInterface {
 
     public function getPagePermission($pathId) : PagePermission;
 
-    public function getActionPermission($pathId, $action = 'index') : bool;
+    public function getActionPermission($pathId, string $action = 'index') : bool;
 
-    public function hasFullActionPermission($pathId, $action = 'index') : bool;
+    public function hasFullActionPermission($pathId, string $action = 'index') : bool;
 
 }

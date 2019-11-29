@@ -26,8 +26,8 @@ use SFW2\Core\View\Exception as ViewException;
 
 class View {
 
-    protected $vars = [];
-    protected $template;
+    protected array $vars = [];
+    protected string $template;
 
     public function __construct(string $template = null) {
         $this->template = $template;

@@ -27,17 +27,14 @@ use mysqli;
 
 class Database {
 
-    /**
-     * @var mysqli
-     */
-    protected $handle = null;
+    protected mysqli $handle = null;
 
-    protected $host;
-    protected $usr;
-    protected $pwd;
-    protected $db;
+    protected string $host;
+    protected string $usr;
+    protected string $pwd;
+    protected string $db;
 
-    protected $prefix = '';
+    protected string $prefix = '';
 
     public function __construct(string $host, string $usr, string $pwd, string $db, string $tablePrefix = 'sfw2') {
         $this->host   = $host;
@@ -48,7 +45,7 @@ class Database {
         $this->connect($host, $usr, $pwd, $db);
     }
 
-    public function connect(string $host, string $usr, string $pwd, string $db) {
+    public function connect(string $host, string $usr, string $pwd, string $db) : void {
         $this->handle = new mysqli('p:' . $host, $usr, $pwd, $db);
         $err = mysqli_connect_error();
 
@@ -90,7 +87,7 @@ class Database {
         $stmt .= $this->addLimit($offset, $count);
 
         $res = $this->query($stmt);
-        $rv = array();
+        $rv = [];
         while(($row = $res->fetch_assoc())) {
             $rv[] = $row;
         }
@@ -101,7 +98,7 @@ class Database {
     public function selectRow(string $stmt, array $params = [], int $row = 0) : array {
         $res = $this->select($stmt, $params, $row, 1);
         if(empty($res)) {
-            return array();
+            return [];
         }
         return array_shift($res);
     }
@@ -127,7 +124,7 @@ class Database {
 
         $stmt  = vsprintf($stmt, $params);
         $res = $this->query($stmt);
-        $rv = array();
+        $rv = [];
         while(($row = $res->fetch_assoc())) {
             $rv[$row['k']] = $row['v'];
         }
@@ -169,7 +166,7 @@ class Database {
     }
 
     public function entryExists(string $table, string $column, string $content) : bool {
-        $where = array();
+        $where = [];
         $where[] = '`' . $column . '` = \''. $this->escape($content) . '\'';
         if($this->selectCount($table, $where) == 0) {
             return false;
@@ -181,7 +178,7 @@ class Database {
         if(!is_array($data)) {
             return $this->handle->escape_string($data);
         }
-        $rv = array();
+        $rv = [];
         foreach($data as $v) {
             $rv[] = $this->escape($v);
         }

@@ -38,7 +38,7 @@ class Image {
     const THUMB_SIZE   = 170;
     const REGULAR_SIZE = 335;
 
-    protected $path = '';
+    protected string $path = '';
 
     public function __construct(string $path) {
         $this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;

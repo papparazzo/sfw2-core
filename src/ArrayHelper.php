@@ -27,40 +27,40 @@ use Iterator;
 use Countable;
 
 class ArrayHelper implements ArrayAccess, Iterator, Countable {
-    protected $pos = 0;
-    protected $valid = true;
+    protected int $pos = 0;
+    protected bool $valid = true;
 
     protected $var = [];
 
-    public function __construct(array $var = []){
+    public function __construct(array $var = []) {
         $this->var = $var;
     }
 
-    public function __toString() {
+    public function __toString() : string {
         return implode(', ', $this->var);
     }
 
-    public function isFirst() {
+    public function isFirst() : bool {
         return ($this->pos == 0);
     }
 
-    public function isLast() {
+    public function isLast() : bool {
         return ($this->pos == count($this->var) - 1);
     }
 
-    public function isMiddle() {
+    public function isMiddle() : bool {
         return !$this->isLast() && !$this->isFirst();
     }
 
-    public function isEven() {
+    public function isEven() : bool {
         return !$this->isOdd();
     }
 
-    public function isOdd() {
+    public function isOdd() : bool {
         return $this->pos % 2;
     }
 
-	public function offsetExists($offset) {
+	public function offsetExists($offset) : bool {
         return isset($this->var[$offset]);
     }
 
@@ -68,17 +68,17 @@ class ArrayHelper implements ArrayAccess, Iterator, Countable {
         return $this->var[$offset];
     }
 
-	public function offsetSet($offset, $value) {
+	public function offsetSet($offset, $value) : void {
         unset($offset, $value);
         // -#- NOOP
     }
 
-	public function offsetUnset($offset) {
+	public function offsetUnset($offset) : void {
         unset($offset);
         // -#- NOOP
     }
 
-    public function count() {
+    public function count() : int {
         return count($this->var);
     }
 
@@ -86,7 +86,7 @@ class ArrayHelper implements ArrayAccess, Iterator, Countable {
         return current($this->var);
     }
 
-	public function next() {
+	public function next() : void {
         if(next($this->var) === false) {
             $this->valid = false;
         }
@@ -97,14 +97,14 @@ class ArrayHelper implements ArrayAccess, Iterator, Countable {
         return key($this->var);
     }
 
-    public function valid() {
+    public function valid() : bool {
         if(empty($this->var)) {
             return false;
         }
         return $this->valid;
     }
 
-    public function rewind() {
+    public function rewind() : void {
         $this->valid = true;
         reset($this->var);
         $this->pos = 0;

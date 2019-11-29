@@ -26,11 +26,11 @@ class Session {
     #http://de3.php.net/manual/en/session.security.php#87608
     #http://www.php.net/manual/de/function.setcookie.php#94398
 
-    const GLOBAL_SECTION     = 'global';
-    const XSS_TOKEN          = 'xss_token';
+    const GLOBAL_SECTION         = 'global';
+    const XSS_TOKEN              = 'xss_token';
 
-    protected $path          = null;
-    protected $serverName    = '';
+    protected string $path       = null;
+    protected string $serverName = '';
 
     public function __construct(string $serverName) {
         $this->path = self::GLOBAL_SECTION;
@@ -56,7 +56,7 @@ class Session {
         $domain = filter_var($this->serverName, FILTER_SANITIZE_URL);
         setcookie(session_name(), '', time() - 42000, '/', $domain, true, true);
         session_destroy();
-        $_SESSION = array();
+        $_SESSION = [];
     }
 
     public function isPathEntrySet(string $index) {

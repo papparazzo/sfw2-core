@@ -24,15 +24,15 @@ namespace SFW2\Core\Permission;
 
 class FullPermission implements PermissionInterface {
 
-    public function getPagePermission($pathId) : PagePermission {
+    public function getPagePermission(int $pathId) : PagePermission {
         return (new PagePermission())->setAllPermissions();
     }
 
-    public function getActionPermission($pathId, $action = 'index') : bool {
+    public function getActionPermission(int $pathId, string $action = 'index') : bool {
         return true;
     }
 
-    public function hasFullActionPermission($pathId, $action = 'index') : bool {
+    public function hasFullActionPermission(int $pathId, string $action = 'index') : bool {
         return true;
     }
 

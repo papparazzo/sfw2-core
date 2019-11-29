@@ -23,14 +23,15 @@
 namespace SFW2\Core;
 
 use Exception;
+use Throwable;
 
 class SFW2Exception extends Exception {
     const UNKNOWN = 0;
 
-    protected $timeStamp = '';
-    protected $identifier = '';
+    protected string $timeStamp = '';
+    protected string $identifier = '';
 
-    public function __construct(string $msg, int $code = self::UNKNOWN, $prev = null) {
+    public function __construct(string $msg, int $code = self::UNKNOWN, Throwable $prev = null) {
         $this->timeStamp = date('d.m.Y H:i:s');
         $this->identifier = strtoupper(md5(microtime() . mt_rand()));
         $msg = wordwrap($msg, 150) . PHP_EOL;
