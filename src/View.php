@@ -38,7 +38,7 @@ class View {
     }
 
     public function assignArray(array $values) : void {
-        $this->vars = array_merge($this->vars, $values);
+        $this->vars = [...$this->vars, ...$values];
     }
 
     public function append(string $name, $val) : void {
@@ -52,7 +52,7 @@ class View {
         if(!isset($this->vars[$name])) {
             $this->vars[$name] = [];
         }
-        $this->vars[$name] = array_merge($this->vars[$name], $values);
+        $this->vars[$name] = [...$this->vars[$name], ...$values];
     }
 
     public function __toString() : string {

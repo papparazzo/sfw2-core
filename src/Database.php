@@ -27,7 +27,7 @@ use mysqli;
 
 class Database {
 
-    protected mysqli $handle = null;
+    protected mysqli $handle;
 
     protected string $host;
     protected string $usr;
