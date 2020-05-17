@@ -33,10 +33,10 @@ class Config {
         $this->checkConfigFile($configFile);
         $this->checkConfigFile($defaultFile);
 
-        $this->conf = [
-            ...require_once $defaultFile,
-            ...require_once $configFile
-        ];
+        $this->conf = array_merge(
+            require_once $defaultFile,
+            require_once $configFile
+        );
     }
 
     protected function checkConfigFile(string $configFile) : void {
