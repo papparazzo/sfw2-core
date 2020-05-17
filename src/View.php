@@ -38,7 +38,7 @@ class View {
     }
 
     public function assignArray(array $values) : void {
-        $this->vars = [...$this->vars, ...$values];
+        $this->vars = array_merge($this->vars, $values);
     }
 
     public function append(string $name, $val) : void {
