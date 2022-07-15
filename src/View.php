@@ -55,6 +55,9 @@ class View {
         $this->vars[$name] = array_merge($this->vars[$name], $values);
     }
 
+    /**
+     * @throws \SFW2\Core\View\Exception
+     */
     public function __toString() : string {
         return $this->getContent();
     }
@@ -63,6 +66,9 @@ class View {
         return isset($this->vars[$name]);
     }
 
+    /**
+     * @throws \SFW2\Core\View\Exception
+     */
     public function __get(string $name) {
         if(isset($this->vars[$name])) {
             return $this->vars[$name];
@@ -70,12 +76,19 @@ class View {
         throw new ViewException("template-var <$name> not set", ViewException::VARIABLE_MISSING);
     }
 
+    /**
+     * @throws \SFW2\Core\View\Exception
+     */
     public function getContent() : string {
         ob_start();
         $this->showContent();
         return ob_get_clean();
     }
 
+    /**
+     * @throws \SFW2\Core\View\Exception
+     * @throws \Exception
+     */
     protected function showContent() : void {
         if(!file_exists($this->template) || !is_readable($this->template)) {
             throw new ViewException("Could not find template <{$this->template}>", ViewException::TEMPLATE_MISSING);

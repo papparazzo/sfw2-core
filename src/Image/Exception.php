@@ -25,8 +25,8 @@ namespace SFW2\Core\Image;
 use SFW2\Core\SFW2Exception;
 
 class Exception extends SFW2Exception {
-    const INVALID_IMAGE_TYPE      = 1;
-    const COULD_NOT_CREATE_PATH   = 2;
-    const COULD_NOT_STORE_IMAGE   = 3;
-    const MAX_IMAGE_COUNT_REACHED = 4;
+    public const INVALID_IMAGE_TYPE      = 1;
+    public const COULD_NOT_CREATE_PATH   = 2;
+    public const COULD_NOT_STORE_IMAGE   = 3;
+    public const MAX_IMAGE_COUNT_REACHED = 4;
 }

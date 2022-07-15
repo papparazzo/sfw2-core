@@ -44,6 +44,9 @@ class Image {
         $this->path = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
+    /**
+     * @throws \SFW2\Core\Image\Exception
+     */
     public function storeImage(string $data) : string {
         $this->createDirs();
 
@@ -104,6 +107,9 @@ class Image {
         return $filename;
     }
 
+    /**
+     * @throws \SFW2\Core\Image\Exception
+     */
     protected function createDirs() : void {
         if(
             !mkdir($this->path, 0777, true) &&
@@ -131,7 +137,7 @@ class Image {
             return false;
         }
 
-        list($srcWidth, $srcHeight, $srcTyp) = getimagesize($src . DIRECTORY_SEPARATOR . $file);
+        [$srcWidth, $srcHeight, $srcTyp] = getimagesize($src . DIRECTORY_SEPARATOR . $file);
 
         if($srcWidth >= $srcHeight) {
             $desWidth = $size;
