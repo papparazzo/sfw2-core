@@ -35,7 +35,7 @@ abstract class HttpException extends SFW2Exception
 
     protected string $description;
     
-    public function __construct(string $caption, string $descripton, string $originMsg, int $code, Throwable $prev)
+    public function __construct(string $caption, string $descripton, string $originMsg, int $code, Throwable $prev = null)
     {
         parent::__construct($originMsg, $code, $prev);
         $this->title = (string)$code;
