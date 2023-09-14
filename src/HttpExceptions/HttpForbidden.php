@@ -29,7 +29,7 @@ use Throwable;
 
 class HttpForbidden extends HttpException
 {
-    public function __construct(string $msg = 'Unauthorized', Throwable $prev = null)
+    public function __construct(string $msg = 'Forbidden', Throwable $prev = null)
     {
         parent::__construct(
             'Keine Berechtigung',
