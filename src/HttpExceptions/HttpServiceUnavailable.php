@@ -35,6 +35,9 @@ class HttpServiceUnavailable extends HttpException
             'Die Seiten sind aktuell offline',
             'Aufgrund von umfangreichen Wartungsarbeiten sind die Webseiten im Moment leider nicht '.
             'zu erreichen. Bitte versuche es später noch einmal.',
-            $msg, StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE, $prev);
+            $msg,
+            StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE,
+            $prev
+        );
     }
 }

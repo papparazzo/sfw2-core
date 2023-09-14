@@ -35,6 +35,9 @@ class HttpNotFound extends HttpException
             'Seite nicht vorhanden',
             'Die gewünschten Daten konnten nicht gefunden werden. ' .
             'Bitte prüfe die URL auf Fehler und drücke dann den reload-Button in deinem Browser.',
-            $msg, StatusCodeInterface::STATUS_NOT_FOUND, $prev);
+            $msg,
+            StatusCodeInterface::STATUS_NOT_FOUND,
+            $prev
+        );
     }
 }
