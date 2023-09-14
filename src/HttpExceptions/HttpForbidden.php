@@ -34,7 +34,7 @@ class HttpForbidden extends HttpException
         parent::__construct(
             'Keine Berechtigung',
             'Dir fehlt die Berechtigung für diese Seite. ' .
-            'Bitte melde dich mit einem anderen User der erweiterte REchte enthält und probiere es erneut.',
+            'Bitte melde dich mit einem anderen User der erweiterte Rechte enthält an und probiere es erneut.',
             $msg,
             StatusCodeInterface::STATUS_FORBIDDEN,
             $prev
