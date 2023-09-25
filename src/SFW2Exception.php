@@ -26,12 +26,10 @@ use Exception;
 use Throwable;
 
 class SFW2Exception extends Exception {
-    public const UNKNOWN = 0;
-
     protected readonly string $timeStamp;
     protected readonly string $identifier;
 
-    public function __construct(string $msg, int $code = self::UNKNOWN, Throwable $prev = null) {
+    public function __construct(string $msg, int $code = 0, Throwable $prev = null) {
         $this->timeStamp = time();
         $this->identifier = strtoupper(md5(microtime() . mt_rand()));
         parent::__construct($msg, $code, $prev);
