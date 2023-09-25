@@ -31,16 +31,16 @@ abstract class HttpException extends SFW2Exception
 {
     protected string $title;
     
-    protected string $caption;
-
-    protected string $description;
-    
-    public function __construct(string $caption, string $descripton, string $originMsg, int $code, Throwable $prev = null)
+    public function __construct(
+        protected string $caption, 
+        protected string $description, 
+        string           $originMsg, 
+        int              $code, 
+        Throwable        $prev = null
+    )
     {
         parent::__construct($originMsg, $code, $prev);
         $this->title = (string)$code;
-        $this->caption = $caption;
-        $this->description = $descripton;
     }
 
     public function getTitle(): string
@@ -56,13 +56,5 @@ abstract class HttpException extends SFW2Exception
     public function getDescription(): string
     {
         return $this->description;
-    }
-
-    public function getInvalidDataGiven() {
-        $title = '400';
-        $caption = 'Ungültige Daten';
-        $description = 'Die Anfrage-Nachricht enthielt ungültige Daten. Bitte prüfe die URL auf Fehler und drücke dann den reload-Button in deinem Browser.';
-
-        return $this->handle($title, $caption, $description);
     }
 }
