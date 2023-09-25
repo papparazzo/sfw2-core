@@ -32,11 +32,11 @@ class HttpInternalServerError extends HttpException
     public function __construct(string $msg = 'Internal Server Error', Throwable $prev = null)
     {
         parent::__construct(
-            'Interner Fehler aufgetreten!',
-            'Es ist ein interner Fehler aufgetreten.',
-            $msg,
-            StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR,
-            $prev
+            caption: 'Interner Fehler aufgetreten!',
+            description: 'Es ist ein interner Fehler aufgetreten. Bitte rufe die Seite erneut auf. Sollte der Fehler abermals auftreten wende dich bitte mit der unten angegenen ID an den Webmaster',
+            originMsg: $msg,
+            code: StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR,
+            prev: $prev
         );
     }
 }

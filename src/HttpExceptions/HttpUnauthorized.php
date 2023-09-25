@@ -32,11 +32,12 @@ class HttpUnauthorized extends HttpException
     public function __construct(string $msg = 'Unauthorized', Throwable $prev = null)
     {
         parent::__construct(
-            'Keine Berechtigung',
-            'Du hast fehlerhafte Anmeldedaten eingegeben. Bitte korrigiere deine Eingaben und probiere es erneut.',
-            $msg,
-            StatusCodeInterface::STATUS_UNAUTHORIZED,
-            $prev
+            caption: 'Keine Berechtigung',
+            description:
+                'Du hast fehlerhafte Anmeldedaten eingegeben. Bitte korrigiere deine Eingaben und probiere es erneut.',
+            originMsg: $msg,
+            code:StatusCodeInterface::STATUS_UNAUTHORIZED,
+            prev: $prev
         );
     }
 }

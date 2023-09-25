@@ -32,12 +32,13 @@ class HttpForbidden extends HttpException
     public function __construct(string $msg = 'Forbidden', Throwable $prev = null)
     {
         parent::__construct(
-            'Keine Berechtigung',
-            'Dir fehlt die Berechtigung für diese Seite. ' .
-            'Bitte melde dich mit einem anderen User der erweiterte Rechte enthält an und probiere es erneut.',
-            $msg,
-            StatusCodeInterface::STATUS_FORBIDDEN,
-            $prev
+            caption: 'Keine Berechtigung',
+            description:
+                'Dir fehlt die Berechtigung für diese Seite. ' .
+                'Bitte melde dich mit einem anderen User der erweiterte Rechte enthält an und probiere es erneut.',
+            originMsg: $msg,
+            code: StatusCodeInterface::STATUS_FORBIDDEN,
+            prev: $prev
         );
     }
 }
