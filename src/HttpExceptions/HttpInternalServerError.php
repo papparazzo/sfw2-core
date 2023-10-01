@@ -33,7 +33,9 @@ class HttpInternalServerError extends HttpException
     {
         parent::__construct(
             caption: 'Interner Fehler aufgetreten!',
-            description: 'Es ist ein interner Fehler aufgetreten. Bitte rufe die Seite erneut auf. Sollte der Fehler abermals auftreten wende dich bitte mit der unten angegenen ID an den Webmaster',
+            description:
+                'Es ist ein interner Fehler aufgetreten. Bitte rufe die Seite erneut auf. ' .
+                'Sollte der Fehler abermals auftreten wende dich bitte mit der unten angegenen ID an den Webmaster',
             originMsg: $msg,
             code: StatusCodeInterface::STATUS_INTERNAL_SERVER_ERROR,
             prev: $prev

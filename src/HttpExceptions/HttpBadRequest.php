@@ -37,7 +37,7 @@ class HttpBadRequest extends HttpException
                 'Die Anfrage-Nachricht enthielt ungültige Daten. Bitte prüfe die URL auf Fehler und drücke dann den ' .
                 'reload-Button in deinem Browser.',
             originMsg: $msg,
-            code:StatusCodeInterface::STATUS_BAD_REQUEST,
+            code: StatusCodeInterface::STATUS_BAD_REQUEST,
             prev: $prev
         );
     }

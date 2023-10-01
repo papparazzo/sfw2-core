@@ -36,7 +36,7 @@ class HttpUnauthorized extends HttpException
             description:
                 'Du hast fehlerhafte Anmeldedaten eingegeben. Bitte korrigiere deine Eingaben und probiere es erneut.',
             originMsg: $msg,
-            code:StatusCodeInterface::STATUS_UNAUTHORIZED,
+            code: StatusCodeInterface::STATUS_UNAUTHORIZED,
             prev: $prev
         );
     }
