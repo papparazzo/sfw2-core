@@ -22,7 +22,7 @@
 
 declare(strict_types=1);
 
-namespace SFW2\Core;
+namespace SFW2\Core\Replacer;
 
 interface ReplaceInterface
 {
