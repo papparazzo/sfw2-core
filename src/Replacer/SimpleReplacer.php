@@ -34,7 +34,7 @@ class SimpleReplacer implements ReplaceInterface
 
     public function replace(string $message, array $data = []): string
     {
-        $data = array_merge($data = $this->templateData);
+        $data = array_merge($this->templateData, $data);
 
         foreach($data as $key => $value) {
             $message = str_replace(
