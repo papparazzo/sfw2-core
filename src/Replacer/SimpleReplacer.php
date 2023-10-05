@@ -32,7 +32,7 @@ class SimpleReplacer implements ReplaceInterface
     {
     }
 
-    public function replace(string $message, array $data): string
+    public function replace(string $message, array $data = []): string
     {
         $data = array_merge($data = $this->templateData);
 
