@@ -9,7 +9,8 @@
         "ext-gd": "*",
         "ext-mbstring": "*",
 
-        "fig/http-message-util": "^1.1.5"
+        "fig/http-message-util": "^1.1.5",
+        "psr/container": "^2.0.2"
     },
     "autoload": {
         "psr-4": {
