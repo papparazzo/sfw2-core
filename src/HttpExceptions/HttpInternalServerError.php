@@ -31,6 +31,7 @@ class HttpInternalServerError extends HttpException
 {
     public function __construct(string $msg = 'Internal Server Error', Throwable $prev = null)
     {
+        // TODO: insert e-mail-address
         parent::__construct(
             caption: 'Interner Fehler aufgetreten!',
             description:
