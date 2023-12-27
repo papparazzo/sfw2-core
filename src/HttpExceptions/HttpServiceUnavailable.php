@@ -34,7 +34,7 @@ class HttpServiceUnavailable extends HttpException
         parent::__construct(
             caption: 'Die Seiten sind aktuell offline',
             description: 
-                'Aufgrund von umfangreichen Wartungsarbeiten sind die Webseiten im Moment leider nicht '.
+                'Aufgrund von umfangreichen Wartungsarbeiten sind die Webseiten im Moment leider nicht ' .
                 'zu erreichen. Bitte versuche es später noch einmal.',
             originMsg: $msg,
             code: StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE,

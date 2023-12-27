@@ -34,7 +34,7 @@ class HttpUnprocessableContent extends HttpException
         parent::__construct(
             caption: 'Fehlerhafte Daten',
             description:
-                'Es wurden fehlerhafte Daten übermittelt.' .
+                'Es wurden fehlerhafte Daten übermittelt. ' .
                 'Bitte prüfe die Daten auf Richtigkeit und versuche es erneut.',
             originMsg: $msg,
             code: StatusCodeInterface::STATUS_UNPROCESSABLE_ENTITY,
