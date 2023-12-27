@@ -61,7 +61,7 @@ class DateTimeHelper
     /**
      * @throws Exception
      */
-    protected function getDateTimeObject(string $date): DateTime
+    public function getDateTimeObject(string $date): DateTime
     {
         if(preg_match('/^[0-9]*$/', $date)) {
             return (new DateTime())->setTimestamp((int)$date);
