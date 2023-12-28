@@ -22,24 +22,29 @@
 
 namespace SFW2\Core;
 
+use DateTime;
+use DateTimeInterface;
 use Exception;
 use Throwable;
 
-class SFW2Exception extends Exception {
-    protected readonly string $timeStamp;
+class SFW2Exception extends Exception
+{
+    protected readonly DateTimeInterface $timeStamp;
     protected readonly string $identifier;
 
-    public function __construct(string $msg, int $code = 0, Throwable $prev = null) {
-        $this->timeStamp = time();
+    public function __construct(string $msg, int $code = 0, Throwable $prev = null)
+    {
+        $this->timeStamp = new DateTime();
         $this->identifier = strtoupper(md5(microtime() . mt_rand()));
         parent::__construct($msg, $code, $prev);
     }
 
     /**
-     * @return string
+     * @return DateTimeInterface
      * @noinspection PhpUnused
      */
-    public function getTimeStamp(): string {
+    public function getTimeStamp(): DateTimeInterface
+    {
         return $this->timeStamp;
     }
 
@@ -47,7 +52,8 @@ class SFW2Exception extends Exception {
      * @return string
      * @noinspection PhpUnused
      */
-    public function getIdentifier(): string {
+    public function getIdentifier(): string
+    {
         return $this->identifier;
     }
 }
