@@ -11,7 +11,8 @@
         "ext-mbstring": "*",
 
         "fig/http-message-util": "^1.1.5",
-        "psr/container": "^2.0.2"
+        "psr/container": "^2.0.2",
+        "salesforce/handlebars-php": "^3.0.1"
     },
     "autoload": {
         "psr-4": {
