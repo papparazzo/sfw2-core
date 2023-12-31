@@ -26,37 +26,25 @@ namespace SFW2\Core\Utils;
 
 use Exception;
 use Handlebars\Handlebars;
-use Handlebars\Loader;
 
-class Mailer
+final class Mailer
 {
-    protected Handlebars $handlebars;
-
     public function __construct(
-        Loader $loader,
-        private readonly string $from,
-        private readonly array $bcc = []
+        private readonly string     $from,
+        private readonly array      $bcc,
+        private readonly Handlebars $bodyHandlebars,
+        private readonly Handlebars $subjectHandlebars,
     ) {
-          $this->handlebars = new Handlebars([
-            "loader" => $loader,
-            "partials_loader" => $loader
-        ]);
     }
 
     /**
      * @throws Exception
      */
-    public function sendTemplate(string $addr, string $subject, string $template, array $data = []): void
+    public function send(string $addr, string $subject, string $body, array $data = []): void
     {
-        $text = $this->handlebars->render($template, $data);
-        $this->send($addr, $subject, $text, $data);
-    }
+        $body = $this->bodyHandlebars->render($body, $data);
+        $subject = $this->subjectHandlebars->render($subject, $data);
 
-    /**
-     * @throws Exception
-     */
-    public function send(string $addr, string $subject, string $text, array $data = []): void
-    {
         $headers = [
             'MIME-Version'              => '1.0',
             'Content-type'              => 'text/html; charset=utf-8',
@@ -65,8 +53,10 @@ class Mailer
             'Bcc'                       => implode(',', $this->bcc)
         ];
 
-        if (!mail($addr, $subject, $text, $headers)) {
-            throw new Exception("Could not send body <$text> to <$addr>");
+        $subject = mb_encode_mimeheader($subject, 'UTF-8', 'Q');
+
+        if (!mail($addr, $subject, $body, $headers)) {
+            throw new Exception("Could not send body <$body> to <$addr>");
         }
     }
 }
