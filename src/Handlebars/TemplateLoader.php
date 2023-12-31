@@ -20,7 +20,7 @@
  *
  */
 
-namespace SFW2\Core\Utils;
+namespace SFW2\Core\Handlebars;
 
 use Handlebars\Loader;
 use InvalidArgumentException;
