@@ -61,6 +61,12 @@ final class HandlebarsFactory
             }
         );
 
+        $handlebars->addHelper("identifier",
+            function($template, $context, $args, $source){
+                return preg_replace("/[^0-9a-zA-Z_-]/", '_', $context->get($args));
+            }
+        );
+
         return $this->handlebars[$loaderType->value] = $handlebars;
     }
 }
