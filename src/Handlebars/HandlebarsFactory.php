@@ -71,6 +71,16 @@ final class HandlebarsFactory
             }
         );
 
+        $handlebars->addHelper(
+            "fillup",
+            function ($template, $context, $args, $source) {
+                preg_match("/(.*?)\s+(.*?)\s+([0-9]*?)/", trim($args), $m);
+                $keyname = $m[1];
+                $length = (int)$m[2];
+                return str_pad($context->get($keyname), $length, '0', STR_PAD_LEFT);
+            }
+        );
+
         return $this->handlebars[$loaderType->value] = $handlebars;
     }
 }
