@@ -33,7 +33,7 @@ final class HandlebarsFactory
     private array $handlebars = [];
 
     public function __construct(
-        private readonly array $templateFolders,
+        private readonly array  $templateFolders,
         private readonly string $defaultNamespace = ''
     )
     {
@@ -45,7 +45,7 @@ final class HandlebarsFactory
             return $this->handlebars[$loaderType->value];
         }
 
-        $loader = match($loaderType) {
+        $loader = match ($loaderType) {
             LoaderType::STRING_LOADER => new StringLoader(),
             LoaderType::TEMPLATE_LOADER => new TemplateLoader($this->templateFolders, $this->defaultNamespace)
         };
@@ -55,8 +55,9 @@ final class HandlebarsFactory
             "partials_loader" => $loader
         ]);
 
-        $handlebars->addHelper("sanitize_phone_nb",
-            function($template, $context, $args, $source){
+        $handlebars->addHelper(
+            "sanitize_phone_nb",
+            function ($template, $context, $args, $source) {
                 return preg_replace("/[^0-9]/", '', $context->get($args));
             }
         );
