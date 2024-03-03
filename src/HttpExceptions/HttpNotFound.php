@@ -32,7 +32,7 @@ class HttpNotFound extends HttpException
     public function __construct(string $msg = 'Not Found', Throwable $prev = null)
     {
         parent::__construct(
-            caption: 'Seite nicht vorhanden',
+            caption: 'Seite / Eintrag nicht vorhanden',
             description:
                 'Die gewünschten Daten konnten nicht gefunden werden. ' .
                 'Bitte prüfe die URL auf Fehler und drücke dann den reload-Button in deinem Browser.',
