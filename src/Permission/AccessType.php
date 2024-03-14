@@ -26,6 +26,7 @@ namespace SFW2\Core\Permission;
 
 use ReflectionEnum;
 use ReflectionException;
+use UnitEnum;
 use ValueError;
 
 enum AccessType
@@ -36,7 +37,7 @@ enum AccessType
 
     case FULL;       // all recordsets
 
-    public static function getByName(string $name): self
+    public static function getByName(string $name): UnitEnum
     {
         try {
             return (new ReflectionEnum(self::class))->getCase($name)->getValue();
