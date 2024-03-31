@@ -55,6 +55,9 @@ final class HandlebarsFactory
             "partials_loader" => $loader
         ]);
 
+        /**
+         * removes all non-numericale characters, so it can easely used in href="tel:..."
+         */
         $handlebars->addHelper(
             "sanitize_phone_nb",
             function ($template, $context, $args, $source) {
@@ -62,6 +65,9 @@ final class HandlebarsFactory
             }
         );
 
+        /**
+         * makes string a valid css-class-name
+         */
         $handlebars->addHelper(
             "identifier",
             function ($template, $context, $args, $source) {
@@ -71,6 +77,9 @@ final class HandlebarsFactory
             }
         );
 
+        /**
+         * pads string with given character (e.g. {{#fillup ItemSubNumber 2}} with ItemSubNumber = 1 leads to '01'
+         */
         $handlebars->addHelper(
             "fillup",
             function ($template, $context, $args, $source) {
