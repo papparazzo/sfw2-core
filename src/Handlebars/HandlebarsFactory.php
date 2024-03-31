@@ -90,6 +90,17 @@ final class HandlebarsFactory
             }
         );
 
+        $handlebars->addHelper(
+            'wrap',
+            function ($template, $context, $args, $source) {
+                preg_match("/(.*?)\s+(?:(?:\"|\')(.*?)(?:\"|\'))/", trim($args), $m);
+                $keyname = $m[1];
+                $template = $m[2];
+                $value = $context->get($keyname);
+                return $value ? printf($template, $value) : '';
+            }
+        );
+
         return $this->handlebars[$loaderType->value] = $handlebars;
     }
 }
