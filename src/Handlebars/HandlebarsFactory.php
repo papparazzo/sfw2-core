@@ -78,7 +78,7 @@ final class HandlebarsFactory
         );
 
         /**
-         * pads string with given character (e.g. {{#fillup ItemSubNumber 2}} with ItemSubNumber = 1 leads to '01'
+         * pads string with given character (e.g. {{#fillup ItemSubNumber 2}} with ItemSubNumber = 1 leads to '01')
          */
         $handlebars->addHelper(
             "fillup",
@@ -90,6 +90,9 @@ final class HandlebarsFactory
             }
         );
 
+        /**
+         * wraps a variable with a given string (e.g. {{#wrap date 'Today is %s'}} if date is empty, empty string is returned)
+         */
         $handlebars->addHelper(
             'wrap',
             function ($template, $context, $args, $source) {
