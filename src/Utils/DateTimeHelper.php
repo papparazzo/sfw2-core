@@ -30,11 +30,12 @@ use IntlDateFormatter;
 
 class DateTimeHelper
 {
-    public const FULL_DATE = 'E, dd. MMM yyyy';
+    public const FULL_DATE = 'E, dd. MMM yyyy'; // FIXME: I18N issue
 
     public function __construct(
         private readonly string $timeZone,
-        private readonly string $locale
+        private readonly string $locale,
+        private readonly string $fullDate = self::FULL_DATE
     )
     {
     }
@@ -42,9 +43,9 @@ class DateTimeHelper
     /**
      * @throws Exception
      */
-    public function getDate(string $pattern, string $date = 'now'): string
+    public function getFullDate(?string $date = 'now'): string
     {
-        if($date == '') {
+        if(is_null($date) || $date === '') {
             return '';
         }
         $x = new IntlDateFormatter(
@@ -52,7 +53,7 @@ class DateTimeHelper
             dateType: IntlDateFormatter::FULL,
             timeType: IntlDateFormatter::FULL,
             timezone: $this->timeZone,
-            pattern: $pattern
+            pattern: $this->fullDate
         );
 
         return $x->format($this->getDateTimeObject($date));
@@ -96,8 +97,8 @@ class DateTimeHelper
      */
     public function getDateString(string $startDate, string $endDate): string
     {
-        $startDate = $this->getDate(self::FULL_DATE, $startDate);
-        $endDate = $this->getDate(self::FULL_DATE, $endDate);
+        $startDate = $this->getFullDate($startDate);
+        $endDate = $this->getFullDate($endDate);
 
         if ($startDate != '' && $endDate != '') {
             return sprintf('%s bis %s', $startDate, $endDate); # FIXME I18N
