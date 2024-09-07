@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Changed 
 - Typo in AccessType-class fixed
 - PHP-Version updated
+- Mailer moved 
+## Added
+- MailerInterface added
+- PathMapInterface added
 
 ## [6.0.0] - 2024-04-01
 ## Changed 
