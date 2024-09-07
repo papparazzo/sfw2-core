@@ -22,12 +22,12 @@
 
 declare(strict_types=1);
 
-namespace SFW2\Core\Utils;
+namespace SFW2\Core\Mailer;
 
 use Exception;
 use Handlebars\Handlebars;
 
-final class Mailer
+final class SimpleMailer implements MailerInterface
 {
     public function __construct(
         private readonly string     $from,
