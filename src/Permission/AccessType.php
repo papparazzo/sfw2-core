@@ -31,7 +31,7 @@ use ValueError;
 
 enum AccessType
 {
-    case VORBIDDEN;
+    case FORBIDDEN;
 
     case RESTRICTED; // only own recordsets
 
