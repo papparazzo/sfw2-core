@@ -30,7 +30,7 @@ use IntlDateFormatter;
 
 class DateTimeHelper
 {
-    public const FULL_DATE = 'E, dd. MMM yyyy'; // FIXME: I18N issue
+    public const string FULL_DATE = 'E, dd. MMM yyyy'; // FIXME: I18N issue
 
     public function __construct(
         private readonly string $timeZone,
