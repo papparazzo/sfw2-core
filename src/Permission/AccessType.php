@@ -24,9 +24,7 @@ declare(strict_types=1);
 
 namespace SFW2\Core\Permission;
 
-use ReflectionEnum;
-use ReflectionException;
-use UnitEnum;
+use Throwable;
 use ValueError;
 
 enum AccessType
@@ -37,14 +35,13 @@ enum AccessType
 
     case FULL;       // all recordsets
 
-    public static function getByName(string $name): UnitEnum
+    public static function getByName(string $name): self
     {
         try {
-            return (new ReflectionEnum(self::class))->getCase($name)->getValue();
-        } catch (ReflectionException) {
+            return self::{$name};
+        } catch (Throwable $th) {
             throw new ValueError("<$name> is not a valid access-type");
         }
-
     }
 }
 
