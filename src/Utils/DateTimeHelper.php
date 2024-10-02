@@ -56,7 +56,7 @@ class DateTimeHelper
             pattern: $this->fullDate
         );
 
-        return $x->format($this->getDateTimeObject($date));
+        return (string)$x->format($this->getDateTimeObject($date));
     }
 
     /**
