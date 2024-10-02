@@ -34,5 +34,5 @@ interface PathMapInterface
 
     public function getPathIdOfParentPath(string $currentPath): int;
 
-    public function updateModificationDateRecursive(string $path);
+    public function updateModificationDateRecursive(string $path): void;
 }
