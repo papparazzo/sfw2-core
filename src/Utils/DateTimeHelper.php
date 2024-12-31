@@ -32,10 +32,13 @@ class DateTimeHelper
 {
     public const string FULL_DATE = 'E, dd. MMM yyyy'; // FIXME: I18N issue
 
+    public const string SHORT_DATE = 'dd.MM.yyyy';
+
     public function __construct(
         private readonly string $timeZone,
         private readonly string $locale,
-        private readonly string $fullDate = self::FULL_DATE
+        private readonly string $fullDate = self::FULL_DATE,
+        private readonly string $shortDate = self::SHORT_DATE,
     )
     {
     }
@@ -45,18 +48,15 @@ class DateTimeHelper
      */
     public function getFullDate(?string $date = 'now'): string
     {
-        if(is_null($date) || $date === '') {
-            return '';
-        }
-        $x = new IntlDateFormatter(
-            locale: $this->locale,
-            dateType: IntlDateFormatter::FULL,
-            timeType: IntlDateFormatter::FULL,
-            timezone: $this->timeZone,
-            pattern: $this->fullDate
-        );
+        return $this->getDate((string)$date, $this->fullDate);
+    }
 
-        return (string)$x->format($this->getDateTimeObject($date));
+    /**
+     * @throws Exception
+     */
+    public function getShortDate(?string $date = 'now'): string
+    {
+        return $this->getDate((string)$date, $this->shortDate);
     }
 
     /**
@@ -105,5 +105,24 @@ class DateTimeHelper
         }
 
         return "$startDate$endDate";
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function getDate(string $date, string $pattern): string
+    {
+        if($date === '') {
+            return '';
+        }
+        $x = new IntlDateFormatter(
+            locale: $this->locale,
+            dateType: IntlDateFormatter::FULL,
+            timeType: IntlDateFormatter::FULL,
+            timezone: $this->timeZone,
+            pattern: $pattern
+        );
+
+        return (string)$x->format($this->getDateTimeObject($date));
     }
 }
