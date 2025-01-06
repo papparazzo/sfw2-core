@@ -26,13 +26,9 @@ namespace SFW2\Core\Interfaces;
 
 interface PathMapInterface
 {
-    public function hasPath(string $path): bool;
+    public function hasPath(string $path, string $method = 'GET'): bool;
 
-    public function getPathId(string $path): int;
+    public function getPathId(string $path, string $method = 'GET'): int;
 
     public function getPath(int $pathId): string;
-
-    public function getPathIdOfParentPath(string $currentPath): int;
-
-    public function updateModificationDateRecursive(string $path): void;
 }
