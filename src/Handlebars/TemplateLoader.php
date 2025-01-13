@@ -27,7 +27,7 @@ use InvalidArgumentException;
 
 class TemplateLoader implements Loader
 {
-     private string $extension = '.handlebars';
+    private string $extension = '.handlebars';
 
     public function __construct(
         private readonly array $templateFolders,

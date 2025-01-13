@@ -35,8 +35,7 @@ final class HandlebarsFactory
     public function __construct(
         private readonly array  $templateFolders,
         private readonly string $defaultNamespace = ''
-    )
-    {
+    ) {
     }
 
     public function getHandlebars(LoaderType $loaderType): Handlebars
