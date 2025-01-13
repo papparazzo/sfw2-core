@@ -26,5 +26,12 @@ namespace SFW2\Core\Mailer;
 
 interface MailerInterface
 {
+    /**
+     * @param string $addr
+     * @param string $subject
+     * @param string $body
+     * @param array<array-key, mixed> $data
+     * @return void
+     */
     public function send(string $addr, string $subject, string $body, array $data = []): void;
 }

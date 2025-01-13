@@ -30,8 +30,15 @@ use Handlebars\Loader\StringLoader;
 final class HandlebarsFactory
 {
 
+    /**
+     * @var Handlebars[]
+     */
     private array $handlebars = [];
 
+    /**
+     * @param array<string, string> $templateFolders
+     * @param string $defaultNamespace
+     */
     public function __construct(
         private readonly array  $templateFolders,
         private readonly string $defaultNamespace = ''

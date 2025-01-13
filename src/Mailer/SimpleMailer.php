@@ -29,6 +29,12 @@ use Handlebars\Handlebars;
 
 final class SimpleMailer implements MailerInterface
 {
+    /**
+     * @param string $from
+     * @param string[] $bcc
+     * @param Handlebars $bodyHandlebars
+     * @param Handlebars $subjectHandlebars
+     */
     public function __construct(
         private readonly string     $from,
         private readonly array      $bcc,
@@ -38,6 +44,11 @@ final class SimpleMailer implements MailerInterface
     }
 
     /**
+     * @param string $addr
+     * @param string $subject
+     * @param string $body
+     * @param array<array-key, mixed> $data
+     * @return void
      * @throws Exception
      */
     public function send(string $addr, string $subject, string $body, array $data = []): void
