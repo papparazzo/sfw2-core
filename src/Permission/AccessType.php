@@ -39,6 +39,7 @@ enum AccessType
     {
         try {
             return self::{$name};
+            /** @phpstan-ignore catch.neverThrown */
         } catch (Throwable $th) {
             throw new ValueError("<$name> is not a valid access-type");
         }
