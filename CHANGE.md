@@ -9,95 +9,93 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PathMapInterface adjusted
 
 ## [8.0.0] - 2024-12-31
-## Removed
+### Removed
 - Exceptions removed (use exception package instead)
-## Added
+### Added
 - getShortDate in DateTimeHelper added
 
 ## [7.0.0] - 2024-09-07
-## Changed 
+### Changed 
 - Typo in AccessType-class fixed
 - PHP-Version updated
 - Mailer moved 
-## Added
+### Added
 - MailerInterface added
 - PathMapInterface added
 
 ## [6.0.0] - 2024-04-01
-## Changed 
+### Changed 
 - DateTimeHelper: Format is given with constructor call
-## Added
--Handlebar-helper "wrap" added
+### Added
+- Handlebar-helper "wrap" added
 
 ## [5.3.0] - 2024-03-09
-## Added
+### Added
 - Fillup-helper added
 
 ## [5.2.0] - 2024-01-02
-## Added
+### Added
 - New handlebars helper 'idenfier' added
 
-New Version 5.1
-
 ## [5.1.0] - 2024-01-01
-## Added
+### Added
 - Permission-interface added
 
 ## [5.0.0] - 2023-12-31
-## Added
+### Added
 - Handlebars-factory added
 
-## Changed
+### Changed
 - Mailer improved
 - PHP 8.2
 
 ## [4.1.0] - 2023-12-30
-## Added
+### Added
 - Mailer and TemplateLoader added
 
 ## [4.0.0] - 2023-12-28
-## Changed 
+### Changed 
 - SFW2Exception::getTimeStamp now returns DateTimeInterface object
 
 ## [3.3.0] - 2023-12-27
-## Changed
+### Changed
 - DateTimeHelper::getDateTimeObject has now public access
 
 ## [3.2.0] - 2023-11-25
-## Added
+### Added
 - DateTimeHelper added
 
 ## [3.1.0] - 2023-10-28
-## Added
+### Added
 - HttpUnprocessableContent added
 
 ## [3.0.0] - 2023-10-01
-## Changed
+### Changed
 - PHP 7.4 -> PHP 8.1
 
 ## [2.0.5] - 2020-05-17
-## Fixed
+### Fixed
 - "Cannot unpack array with string keys" error (see splat-operator in View.php)
 
 ## [2.0.4] - 2020-05-17
-## Fixed
+### Fixed
 - "Cannot unpack array with string keys" error (see splat-operator in View.php)
 
 ## [2.0.3] - 2020-05-17
-## Fixed
+### Fixed
 - "Cannot unpack array with string keys" error (see splat-operator in Config.php)
 
 ## [2.0.2] - 2019-12-08
-## Fixed
+### Fixed
 - default "null" removed
 - array_merge replaced by php 7.4 ...
 
 ## [2.0.1] - 2019-11-29
-## Fixed
+### Fixed
 - use (empty) string instead of 'null'
 
 ## [2.0.0] - 2019-11-28
-## Changed
+### Changed
 - PHP 7.3 -> PHP 7.4
 
 ## [1.0.1] - 2019-11-15
