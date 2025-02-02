@@ -17,7 +17,6 @@
  *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.
- *
  */
 
 namespace SFW2\Core\Handlebars;
@@ -31,13 +30,12 @@ class TemplateLoader implements Loader
 
     /**
      * @param array<string, string> $templateFolders
-     * @param string $defaultNamespace
+     * @param string                $defaultNamespace
      */
     public function __construct(
         private readonly array $templateFolders,
         private readonly string $defaultNamespace = ''
-    )
-    {
+    ) {
         if(empty($this->templateFolders)) {
             throw new InvalidArgumentException("no templates-folder given");
         }
