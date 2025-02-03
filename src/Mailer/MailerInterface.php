@@ -17,7 +17,6 @@
  *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.
- *
  */
 
 declare(strict_types=1);
@@ -27,10 +26,10 @@ namespace SFW2\Core\Mailer;
 interface MailerInterface
 {
     /**
-     * @param string $addr
-     * @param string $subject
-     * @param string $body
-     * @param array<array-key, mixed> $data
+     * @param  string                  $addr
+     * @param  string                  $subject
+     * @param  string                  $body
+     * @param  array<array-key, mixed> $data
      * @return void
      */
     public function send(string $addr, string $subject, string $body, array $data = []): void;
