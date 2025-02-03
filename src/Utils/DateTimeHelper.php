@@ -17,7 +17,6 @@
  *
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program. If not, see <http://www.gnu.org/licenses/agpl.txt>.
- *
  */
 
 declare(strict_types=1);
@@ -39,8 +38,7 @@ class DateTimeHelper
         private readonly string $locale,
         private readonly string $fullDate = self::FULL_DATE,
         private readonly string $shortDate = self::SHORT_DATE,
-    )
-    {
+    ) {
     }
 
     /**
