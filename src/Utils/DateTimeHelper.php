@@ -70,24 +70,24 @@ class DateTimeHelper
 
     public function getTimeString(string $startTime, string $endTime): string
     {
-         # FIXME Check if time == timestamp
+         // FIXME Check if time == timestamp
         if ($startTime == '' && $endTime == '') {
             return '';
         }
 
         if($startTime !== '' && $endTime == '') {
-            return sprintf('ab %s Uhr', mb_substr($startTime, 0, 5)); # FIXME I18N
+            return sprintf('ab %s Uhr', mb_substr($startTime, 0, 5)); // FIXME I18N
         }
 
         if($startTime !== '') {
-            $startTime = sprintf('von %s ', mb_substr($startTime, 0, 5)); # FIXME I18N
+            $startTime = sprintf('von %s ', mb_substr($startTime, 0, 5)); // FIXME I18N
         }
 
         if($endTime !== '') {
-            $startTime .= sprintf('bis %s ', mb_substr($endTime, 0, 5)); # FIXME I18N
+            $startTime .= sprintf('bis %s ', mb_substr($endTime, 0, 5)); // FIXME I18N
         }
 
-        return $startTime . 'Uhr'; # FIXME I18N
+        return $startTime . 'Uhr'; // FIXME I18N
     }
 
     /**
@@ -99,7 +99,7 @@ class DateTimeHelper
         $endDate = $this->getFullDate($endDate);
 
         if ($startDate != '' && $endDate != '') {
-            return sprintf('%s bis %s', $startDate, $endDate); # FIXME I18N
+            return sprintf('%s bis %s', $startDate, $endDate); // FIXME I18N
         }
 
         return "$startDate$endDate";
