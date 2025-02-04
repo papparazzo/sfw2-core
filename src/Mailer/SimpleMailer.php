@@ -29,8 +29,8 @@ use Handlebars\Handlebars;
 final class SimpleMailer implements MailerInterface
 {
     /**
-     * @param string $from
-     * @param string[] $bcc
+     * @param string     $from
+     * @param string[]   $bcc
      * @param Handlebars $bodyHandlebars
      * @param Handlebars $subjectHandlebars
      */
@@ -43,10 +43,10 @@ final class SimpleMailer implements MailerInterface
     }
 
     /**
-     * @param string $addr
-     * @param string $subject
-     * @param string $body
-     * @param array<array-key, mixed> $data
+     * @param  string                  $addr
+     * @param  string                  $subject
+     * @param  string                  $body
+     * @param  array<array-key, mixed> $data
      * @return void
      * @throws Exception
      */
