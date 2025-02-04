@@ -36,7 +36,7 @@ final class HandlebarsFactory
 
     /**
      * @param array<string, string> $templateFolders
-     * @param string $defaultNamespace
+     * @param string                $defaultNamespace
      */
     public function __construct(
         private readonly array  $templateFolders,
@@ -101,7 +101,7 @@ final class HandlebarsFactory
         $handlebars->addHelper(
             'wrap',
             function ($template, $context, $args, $source) {
-                preg_match("/(.*?)\s+(?:(?:\"|\')(.*?)(?:\"|\'))/", trim($args), $m);
+                preg_match("/(.*?)\s+[\"'](.*?)[\"']/", trim($args), $m);
                 $keyname = $m[1];
                 $template = $m[2];
                 $value = $context->get($keyname);
