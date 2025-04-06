@@ -77,6 +77,7 @@ final class HandlebarsFactory
             "identifier",
             function ($template, $context, $args, $source) {
                 $tmp = strtolower($context->get($args));
+                 // FIXME: I18N issue
                 $tmp = str_replace(['ä', 'ö', 'ü', 'ß'], ['ae', 'oe', 'ue', 'ss'], $tmp);
                 return preg_replace("/[^0-9a-zA-Z_-]/", '_', $tmp);
             }
