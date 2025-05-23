@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c377cf46c51b90c66cc333dd41fd59b",
+    "content-hash": "63b32f7ff30c0a614907e63b5be71573",
     "packages": [
         {
             "name": "psr/container",
@@ -115,21 +115,71 @@
                 "source": "https://github.com/salesforce/handlebars-php/tree/3.0.1"
             },
             "time": "2023-01-12T16:24:23+00:00"
+        },
+        {
+            "name": "sfw2/interoperability",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/papparazzo/sfw2-interoperability.git",
+                "reference": "1cdbc3f159de49d873ae9c8f7b999782dfa0d5b7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/papparazzo/sfw2-interoperability/zipball/1cdbc3f159de49d873ae9c8f7b999782dfa0d5b7",
+                "reference": "1cdbc3f159de49d873ae9c8f7b999782dfa0d5b7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^2.1.5",
+                "squizlabs/php_codesniffer": "^3.11"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SFW2\\Interoperability\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "AGPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Stefan Paproth",
+                    "email": "pappi-@gmx.de"
+                }
+            ],
+            "description": "holds several interfaces for interoperability",
+            "keywords": [
+                "interfaces",
+                "interoperability",
+                "micro-framework",
+                "sfw2"
+            ],
+            "support": {
+                "issues": "https://github.com/papparazzo/sfw2-interoperability/issues",
+                "source": "https://github.com/papparazzo/sfw2-interoperability/tree/1.1.0"
+            },
+            "time": "2025-05-20T15:41:46+00:00"
         }
     ],
     "packages-dev": [
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.2",
+            "version": "2.1.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "7d08f569e582ade182a375c366cbd896eccadd3a"
+                "reference": "b8c1cf533cba0c305d91c6ccd23f3dd0566ba5f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/7d08f569e582ade182a375c366cbd896eccadd3a",
-                "reference": "7d08f569e582ade182a375c366cbd896eccadd3a",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b8c1cf533cba0c305d91c6ccd23f3dd0566ba5f9",
+                "reference": "b8c1cf533cba0c305d91c6ccd23f3dd0566ba5f9",
                 "shasum": ""
             },
             "require": {
@@ -174,20 +224,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-01-21T14:54:06+00:00"
+            "time": "2025-05-16T09:40:10+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
-            "version": "3.11.3",
+            "version": "3.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/PHP_CodeSniffer.git",
-                "reference": "ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10"
+                "reference": "65ff2489553b83b4597e89c3b8b721487011d186"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10",
-                "reference": "ba05f990e79cbe69b9f35c8c1ac8dca7eecc3a10",
+                "url": "https://api.github.com/repos/PHPCSStandards/PHP_CodeSniffer/zipball/65ff2489553b83b4597e89c3b8b721487011d186",
+                "reference": "65ff2489553b83b4597e89c3b8b721487011d186",
                 "shasum": ""
             },
             "require": {
@@ -254,11 +304,11 @@
                     "type": "open_collective"
                 },
                 {
-                    "url": "https://thanks.dev/phpcsstandards",
+                    "url": "https://thanks.dev/u/gh/phpcsstandards",
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-01-23T17:04:15+00:00"
+            "time": "2025-05-11T03:36:00+00:00"
         }
     ],
     "aliases": [],

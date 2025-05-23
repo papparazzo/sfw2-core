@@ -10,6 +10,8 @@
         "ext-intl": "*",
         "ext-mbstring": "*",
 
+        "sfw2/interoperability": "^1.0",
+
         "psr/container": "^2.0.2",
         "salesforce/handlebars-php": "^3.0.1"
     },

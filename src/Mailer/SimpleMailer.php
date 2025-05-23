@@ -25,6 +25,7 @@ namespace SFW2\Core\Mailer;
 
 use Exception;
 use Handlebars\Handlebars;
+use SFW2\Interoperability\MailerInterface;
 
 final class SimpleMailer implements MailerInterface
 {
